@@ -3,6 +3,8 @@ from flask import Flask
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
+from datetime import datetime
 
 db=SQLAlchemy()
 
@@ -14,12 +16,15 @@ def create_app():
     app.debug=True
     app.secret_key='somesecretgoeshere'
     #set the app configuration data 
-    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///mydbname.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///museup.sqlite'
     #initialise db with flask app
     db.init_app(app)
 
     bootstrap = Bootstrap5(app)
     
+    UPLOAD_FOLDER = '/templates/static/img'
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
     #initialize the login manager
     login_manager = LoginManager()
     
