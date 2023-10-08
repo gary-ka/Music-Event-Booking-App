@@ -33,3 +33,27 @@ def login():
             flash(error)
     return render_template('user.html', form=login_form, heading='Login')
 
+
+@bp.route('/register', methods=['GET', 'POST'])
+def register():
+    register_form = RegisterForm()
+    if register_form.validate_on_submit():
+            #get username, password and email from the form
+            uname = register_form.user_name.data
+            pwd = register_form.password.data
+            email = register_form.email_id.data
+            phone = register_form.phone.data
+            address = register_form.address.data
+            #check if a user exists
+            user = db.session.query(User).filter(User.name == uname).scalar()
+            if user:
+                flash('Username already exists, please try another name')
+                return redirect(url_for('auth.register'))
+            pwd_hash = generate_password_hash(pwd)
+            #create a new User model object
+            new_user = User(name=uname, password_hash=pwd_hash, email_id=email, phone_num=phone, address=address)
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('main.index'))
+    else:
+        return render_template('user.html', form=register_form, heading='Register')
