@@ -57,3 +57,10 @@ def register():
             return redirect(url_for('main.index'))
     else:
         return render_template('user.html', form=register_form, heading='Register')
+    
+
+@bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('main.index'))
