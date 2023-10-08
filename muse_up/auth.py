@@ -8,7 +8,7 @@ from . import db
 #create a blueprint
 bp = Blueprint('auth', __name__)
 
-# this is a hint for a login function
+
 @bp.route('/login', methods=['GET', 'POST'])
 def login(): 
     print('In Login View function')
