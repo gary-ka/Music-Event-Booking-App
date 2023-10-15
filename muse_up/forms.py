@@ -1,8 +1,43 @@
 
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, SelectField, DateTimeField, IntegerField, DecimalField
 from wtforms.validators import InputRequired, Length, Email, EqualTo
+from flask_wtf.file import FileRequired, FileField, FileAllowed
 
+ALLOWED_FORMAT = {'PNG', 'JPG', 'JPEG', 'png', 'jpg', 'jpeg', 'jfif'}
+
+#Creates the 'Create Event' Form
+class CreateForm(FlaskForm):
+    event_name = StringField('Event Name', validators=[InputRequired('Enter Event Title'), Length(min = 1, max = 20)])
+    event_photo = FileField('Cover Photo', validators=[FileRequired(message = 'Image cannot be empty'), FileAllowed(ALLOWED_FORMAT, message = 'Only supports png, jpg, jpeg, JPG, PNG, JPEG, jfif')])
+    event_introduction = StringField('Event Introduction', validators=[InputRequired('Please enter event introduction'), Length(min = 1, max = 100)])
+    event_musician = StringField('Musicians', validators = [InputRequired('Enter a musician'), Length(min = 1, max = 100)])
+    event_description = TextAreaField('Event Description', validators=[InputRequired('Enter event description'), Length(min = 1, max = 1000)])
+    event_category = SelectField('Music Categories', validators=[InputRequired('Enter music category')], choices=[('text','Pop'), ('text','Classical'), ('text','Jazz'), ('text','Rock'), ('text','Country'), ('text','Hip Hop')])
+    event_location = StringField('Location', validators = [InputRequired('Enter Location'), Length(min = 1, max = 100)])
+    event_datetime = DateTimeField('Event Date and Time', validators = [InputRequired('Enter date abnd time')])
+    event_cost = DecimalField('Ticket Cost', places = 2, rounding = set, use_local = True)
+    event_availabilities = IntegerField('Ticket Availabilities', validators = [InputRequired('Enter Ticket Availabilities')])
+
+#Creates the 'Booking' Form
+class BookingForm(FlaskForm):
+    booking_tickets = IntegerField('Number of Tickets', validators=[InputRequired('Enter Number of Tickets')])
+    booking_cardName = StringField('Card Nameholder', validators=[InputRequired('Enter Card Nameholder')])
+    booking_cardNo = IntegerField('Card Number', validators=[InputRequired('Enter Card Number'), Length(min=12, max=12)])
+    booking_cardCVV = IntegerField('Card CVV', validators = [InputRequired('Enter Card CVV'), Length(min=3,max=3)])
+    Booking_cardMonth = SelectField('Expiry Month', validators=[InputRequired('Enter Card Expiry Month')], choices=[('text', 'January'), 
+                                                                                                                    ('text', 'February'), 
+                                                                                                                    ('text', 'March'), 
+                                                                                                                    ('text', 'April'), 
+                                                                                                                    ('text', 'May'), 
+                                                                                                                    ('text', 'June'), 
+                                                                                                                    ('text', 'July'), 
+                                                                                                                    ('text', 'August'), 
+                                                                                                                    ('text', 'September'), 
+                                                                                                                    ('text', 'October'), 
+                                                                                                                    ('text', 'November'), 
+                                                                                                                    ('text', 'December')])
+    booking_cardYear = IntegerField('Expiry Year', validators= [InputRequired('Enter Card Expiry Year'), Length(min=4, max= 4)])
 
 #creates the login information
 class LoginForm(FlaskForm):
