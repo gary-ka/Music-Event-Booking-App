@@ -13,6 +13,8 @@ db=SQLAlchemy()
 def create_app():
   
     app=Flask(__name__)  # this is the name of the module/package that is calling this app
+    Bcrypt(app)
+
     app.debug=True
     app.secret_key='somesecretgoeshere'
     #set the app configuration data 
@@ -43,7 +45,8 @@ def create_app():
     # a common practice.
     from . import views
     app.register_blueprint(views.bp)
-
+    from . import events
+    app.register_blueprint(events.destbp)
     from . import auth
     app.register_blueprint(auth.bp)
     
