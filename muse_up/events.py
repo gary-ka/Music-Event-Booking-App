@@ -7,16 +7,16 @@ from werkzeug.utils import secure_filename
 #additional import:
 from flask_login import login_required, current_user
 
-destbp = Blueprint('destination', __name__, url_prefix='/events')
+Eventbp = Blueprint('events', __name__, url_prefix='/events')
 
-@destbp.route('/<id>')
+@Eventbp.route('/<id>')
 def show(id):
     Event = db.session.scalar(db.select(Event).where(Event.id==id))
     # create the comment form
     form = CommentForm()    
     return render_template('events/details.html', events=Event, form=form)
 
-@destbp.route('/create', methods=['GET', 'POST'])
+@Eventbp.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
   print('Method type: ', request.method)
@@ -57,7 +57,7 @@ def check_upload_file(form):
   fp.save(upload_path)
   return db_upload_path
 
-@destbp.route('/<id>/comment', methods=['GET', 'POST'])  
+@Eventbp.route('/<id>/comment', methods=['GET', 'POST'])  
 @login_required
 def comment(id):  
     form = CommentForm()  
