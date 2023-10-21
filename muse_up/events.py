@@ -62,11 +62,10 @@ def check_upload_file(form):
 def comment(id):  
     form = CommentForm()  
     #get the destination object associated to the page and the comment
-    event = db.session.scalar(db.select(Event).where(Event.id==id))
+    destination = db.session.scalar(db.select(Event).where(Event.id==id))
     if form.validate_on_submit():  
       #read the comment from the form
-      comment = Comment(Commenttext=form.text.data, 
-                        event=event,
+      comment = Comment(text=form.text.data, destination=destination,
                         user=current_user) 
       #here the back-referencing works - comment.destination is set
       # and the link is created
@@ -76,4 +75,4 @@ def comment(id):
       flash('Your comment has been added', 'success')  
       # print('Your comment has been added', 'success') 
     # using redirect sends a GET request to destination.show
-    return redirect(url_for('events.details', id=id))
+    return redirect(url_for('event.show', id=id))
