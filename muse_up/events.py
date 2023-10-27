@@ -79,5 +79,6 @@ def comment(id):
     return redirect(url_for('events.details', id=id))
 
 @Eventbp.route('/myevents')
+@login_required
 def myevents():
     return render_template('events/myevents.html')
