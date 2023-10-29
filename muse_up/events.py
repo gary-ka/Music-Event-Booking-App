@@ -33,6 +33,7 @@ def create():
                   EventDateTime=form.event_datetime.data,
                   EventCost=form.event_cost.data,
                   EventAvailability=form.event_availabilities.data,
+                  EventStatus=form.status.data,
                   Eventimage=db_file_path)
     # add the object to the db session
     db.session.add(event)
