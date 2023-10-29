@@ -10,7 +10,7 @@ from flask_login import login_required, current_user
 Eventbp = Blueprint('events', __name__, url_prefix='/events')
 
 @Eventbp.route('/<id>')
-def show(id):
+def details(id):
     Event = db.session.scalar(db.select(Event).where(Event.id==id))
     # create the comment form
     form = CommentForm()    
@@ -77,3 +77,8 @@ def comment(id):
       # print('Your comment has been added', 'success') 
     # using redirect sends a GET request to destination.show
     return redirect(url_for('events.details', id=id))
+
+@Eventbp.route('/myevents')
+@login_required
+def myevents():
+    return render_template('events/myevents.html')
