@@ -10,7 +10,8 @@
                 <h1 style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">Create Event</h1>
             </div>
         </div>
-        <form class= "was-validated">
+        <form method="POST" action = "{{url_for('events.create') }}">
+            {{ form.hidden_tag() }}
             <!--Image Drop-->
             <div class="container img-upload d-flex justify-content-center align-items-center mt-1">
                 <div class="d-flex flex-column align-items-center">
@@ -23,7 +24,8 @@
                     <div class="p2" align = "center">
                           <label for= "validationPhoto"><h4 class="HomePage_Text">Upload Cover Letter</h4></label>
                           <div class="mb-3">
-                            <input class="form-control" type="file" id="validationPhoto" required>
+                            {{form.event_photo.label(class = "form-control-label") }}
+                            {{form.event_photo(class = "form-control", placeholder = "Enter a file") }}
                             <div class = "invalid-feedback">
                               Please upload a cover photo.
                             </div>
@@ -37,8 +39,8 @@
                     <div class="container col-lg-8" >
                         <div>
                             <div class="mb-3">
-                              <label for="validationEventTitle" class="create_subheading">Name Your Event*</label>
-                              <input class="form-control" type="text" placeholder="Event Title" aria-label="default input example" id="validationEventTitle" required>
+                                {{ form.event_name.label(class="form-control-label") }}
+                                {{ form.event_name(class="form-control", placeholder="Event Title") }}
                               <div class="invalid-feedback">
                                 Please add an event name.
                               </div>
@@ -47,18 +49,16 @@
 
                         <div>
                             <div class="mb-3">
-                              <label for="validationIntro" class="create_subheading">Introduce Your Event*</label>
-                              <textarea class="form-control" id="EventIntro" rows="2" maxlength="50" placeholder="Event Introduction (50 Words Max.)" id="validationIntro" required></textarea>
-                              <div class="invalid-feedback">
-                                Please add an introduction.
+                                {{ form.event_introduction.label(class="form-control-label") }}
+                                {{ form.event_introduction(class="form-control", placeholder="Event Introduction (50 Words Max.)") }}
                               </div>
                             </div>
                         </div>
                         
                         <div>
                           <div class="mb-3">
-                            <label for="validationMusician" class="create_subheading">Musicians</label>
-                            <textarea class="form-control" id="MusicianList" rows="2" maxlength="50" placeholder="Musician List (50 Words Max.)" id="validationMusician" required></textarea>
+                            {{ form.event_musician.label(class="form-control-label") }}
+                            {{ form.event_musician(class="form-control", placeholder="Musician List (50 Words Max.)") }}
                               <div class="invalid-feedback">
                                 Please add musicians.
                               </div>
@@ -69,7 +69,8 @@
                         <div>
                             <label for="validationDescription" class="create_subheading">Describe Your Event*</label>
                             <div class="mb-3">
-                                <textarea class="form-control" id="Event Description" rows="10" maxlength="1000" placeholder="Event Description (1000 Words Max)" id="validationDescription" required></textarea>
+                                {{ form.event_description.label(class="form-control-label") }}
+                                {{ form.event_description(class="form-control", placeholder="Event Description (1000 Words Max)") }}
                                 <div class="invalid-feedback">
                                   Please add an event description.
                                 </div>                            
@@ -80,48 +81,43 @@
                     <div class="container create-details col-lg-4">
                         <div class="create_subheading2">Enter Event Details</div>
                         <div>
-                            <label for="validationCategory" class="create_subheading3">Music Category*</label>
-                            <select class="form-select form-select-md" aria-label="Small select example" id="validationCategory" required>
-                                <option selected disabled value>Select Music Category</option>
-                                <option value="1">Pop</option>
-                                <option value="2">Classical</option>
-                                <option value="3">Jazz</option>
-                                <option value="4">Rock</option>
-                                <option value="5">Country</option>
-                                <option value="6">Hip Hop</option>
-                            </select>
+                            {{ form.event_category.label(class="form-control-label") }}
+                            {{ form.event_category(class="form-select form-select-md", placeholder="Select Music Category") }}
                             <div class="invalid-feedback">
-                              Please add a music category.
+                                Please add a music category.
                             </div>
                         </div>
                         <div>
-                            <label for= "validationVenueLocation" class="create_subheading3">Venue Location*</label>
-                            <input class="form-control" list="Venues" id="VenueLocation" placeholder="Find a Location" id="validationVenueLocation" required>
-                                <datalist id="Venues">
+                            {{ form.event_location.label(class="form-control-label") }}
+                            {{ form.event_location(class="form-control", list="Venues", placeholder="Find a Location") }}
+                            <datalist id="Venues">
                                 <option value="Brisbane, QLD">
                                 <option value="Sydney, NSW">
                                 <option value="Perth, WA">
                                 <option value="Darwin,NT">
                                 <option value="Adelaide, SA">
                                 <option value="Melbourne, VIC">
-                                </datalist>
+                            </datalist>
+                            <div class="invalid-feedback">
+                                Please add a venue location.
+                            </div>
                         </div>
 
                         <div>
-                            <label for="validationDateTime" class="create_subheading3">Date and Time</label>
-                            <input type="datetime-local" class="form-control" id="validationDateTime" required>
+                            {{ form.event_datetime.label(class="form-control-label") }}
+                            {{ form.event_datetime(class="form-control", type="datetime-local") }}
                             <div class="invalid-feedback">
                               Please add a date and time.
                             </div>
                         </div>
 
                         <div>
-                            <label for="validationTicketPrice" class="create_subheading3">Ticket Price*</label>
+                            {{ form.event_cost.label(class="form-control-label") }}
                             <div class="input-group mb-3">
                                 <span class="input-group-text">$</span>
-                                 <input type="number" class="form-control" aria-label="Nearest dollar" id="validationTicketPrice" required>
+                                {{ form.event_cost(class="form-control", type="number", min="0") }}
                                  <span class="input-group-text">.</span>
-                                 <input type="number" class="form-control" aria-label="cents" id="validationTicketPrice" max="99" required>                          
+                                 {{ form.event_cost(class="form-control", type="number", max="99") }}
                                  <div class="invalid-feedback">
                               Please add a ticket price.
                             </div>
@@ -130,8 +126,8 @@
                         </div>
 
                         <div>
-                            <label for="validationTicketNumber" class="create_subheading3">Ticket Availabilities*</label>
-                            <input type="number" class="form-control" placeholder="Enter number of tickets" min="0" id="validationTicketNumber" required>
+                            {{ form.event_availabilities.label(class="form-control-label") }}
+                            {{ form.event_availabilities(class="form-control", type="number", placeholder="Enter number of tickets", min="0", required="required") }}
                             <div class="invalid-feedback">
                               Please add ticket availabilities.
                             </div>
@@ -166,7 +162,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a button type="button" class="btn btn-secondary" href="./index.html">Return to Home</button></a>
+                <a button type="button" class="btn btn-secondary" href="/">Return to Home</button></a>
             </div>
         </div>
     </div>
