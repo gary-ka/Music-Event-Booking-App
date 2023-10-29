@@ -39,7 +39,7 @@
                     <div class="container col-lg-8" >
                         <div>
                             <div class="mb-3">
-                                {{ form.event_name.label(class="form-control-label") }}
+                                {{ form.event_name.label(class="form-control-label create_subheading") }}
                                 {{ form.event_name(class="form-control", placeholder="Event Title") }}
                               <div class="invalid-feedback">
                                 Please add an event name.
@@ -49,15 +49,15 @@
 
                         <div>
                             <div class="mb-3">
-                                {{ form.event_introduction.label(class="form-control-label") }}
+                                {{ form.event_introduction.label(class="form-control-label create_subheading") }}
                                 {{ form.event_introduction(class="form-control", placeholder="Event Introduction (50 Words Max.)") }}
-                              </div>
                             </div>
                         </div>
                         
+
                         <div>
                           <div class="mb-3">
-                            {{ form.event_musician.label(class="form-control-label") }}
+                            {{ form.event_musician.label(class="form-control-label create_subheading") }}
                             {{ form.event_musician(class="form-control", placeholder="Musician List (50 Words Max.)") }}
                               <div class="invalid-feedback">
                                 Please add musicians.
@@ -67,9 +67,8 @@
 
 
                         <div>
-                            <label for="validationDescription" class="create_subheading">Describe Your Event*</label>
                             <div class="mb-3">
-                                {{ form.event_description.label(class="form-control-label") }}
+                                {{ form.event_description.label(class="form-control-label create_subheading") }}
                                 {{ form.event_description(class="form-control", placeholder="Event Description (1000 Words Max)") }}
                                 <div class="invalid-feedback">
                                   Please add an event description.
@@ -81,14 +80,14 @@
                     <div class="container create-details col-lg-4">
                         <div class="create_subheading2">Enter Event Details</div>
                         <div>
-                            {{ form.event_category.label(class="form-control-label") }}
+                            {{ form.event_category.label(class="form-control-label create_subheading3") }}
                             {{ form.event_category(class="form-select form-select-md", placeholder="Select Music Category") }}
                             <div class="invalid-feedback">
                                 Please add a music category.
                             </div>
                         </div>
                         <div>
-                            {{ form.event_location.label(class="form-control-label") }}
+                            {{ form.event_location.label(class="form-control-label create_subheading3") }}
                             {{ form.event_location(class="form-control", list="Venues", placeholder="Find a Location") }}
                             <datalist id="Venues">
                                 <option value="Brisbane, QLD">
@@ -104,7 +103,7 @@
                         </div>
 
                         <div>
-                            {{ form.event_datetime.label(class="form-control-label") }}
+                            {{ form.event_datetime.label(class="form-control-label create_subheading3") }}
                             {{ form.event_datetime(class="form-control", type="datetime-local") }}
                             <div class="invalid-feedback">
                               Please add a date and time.
@@ -112,7 +111,7 @@
                         </div>
 
                         <div>
-                            {{ form.event_cost.label(class="form-control-label") }}
+                            {{ form.event_cost.label(class="form-control-label create_subheading3") }}
                             <div class="input-group mb-3">
                                 <span class="input-group-text">$</span>
                                 {{ form.event_cost(class="form-control", type="number", min="0") }}
@@ -126,7 +125,7 @@
                         </div>
 
                         <div>
-                            {{ form.event_availabilities.label(class="form-control-label") }}
+                            {{ form.event_availabilities.label(class="form-control-label create_subheading3") }}
                             {{ form.event_availabilities(class="form-control", type="number", placeholder="Enter number of tickets", min="0", required="required") }}
                             <div class="invalid-feedback">
                               Please add ticket availabilities.

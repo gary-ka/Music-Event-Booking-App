@@ -8,11 +8,11 @@ ALLOWED_FORMAT = {'PNG', 'JPG', 'JPEG', 'png', 'jpg', 'jpeg', 'jfif'}
 
 #Creates the 'Create Event' Form
 class CreateForm(FlaskForm):
-    event_name = StringField('Event Name', validators=[InputRequired('Enter Event Title'), Length(min = 1, max = 20)])
+    event_name = StringField('Name your event', validators=[InputRequired('Enter Event Title'), Length(min = 1, max = 20)])
     event_photo = FileField('Cover Photo', validators=[FileRequired(message = 'Image cannot be empty'), FileAllowed(ALLOWED_FORMAT, message = 'Only supports png, jpg, jpeg, JPG, PNG, JPEG, jfif')])
-    event_introduction = StringField('Event Introduction', validators=[InputRequired('Please enter event introduction'), Length(min = 1, max = 100)])
+    event_introduction = StringField('Introduce your event', validators=[InputRequired('Please enter event introduction'), Length(min = 1, max = 100)])
     event_musician = StringField('Musicians', validators = [InputRequired('Enter a musician'), Length(min = 1, max = 100)])
-    event_description = TextAreaField('Event Description', validators=[InputRequired('Enter event description'), Length(min = 1, max = 1000)])
+    event_description = TextAreaField('Describe your event', validators=[InputRequired('Enter event description'), Length(min = 1, max = 1000)])
     event_category = SelectField('Music Categories', validators=[InputRequired('Enter music category')], choices=[('text','Pop'), ('text','Classical'), ('text','Jazz'), ('text','Rock'), ('text','Country'), ('text','Hip Hop')])
     event_location = StringField('Location', validators = [InputRequired('Enter Location'), Length(min = 1, max = 100)])
     event_datetime = DateTimeField('Event Date and Time', validators = [InputRequired('Enter date abnd time')])
