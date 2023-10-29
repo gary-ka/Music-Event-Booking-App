@@ -18,6 +18,7 @@ class CreateForm(FlaskForm):
     event_datetime = DateTimeField('Event Date and Time', validators = [InputRequired('Enter date abnd time')])
     event_cost = DecimalField('Ticket Cost', places = 2, rounding = set)
     event_availabilities = IntegerField('Ticket Availabilities', validators = [InputRequired('Enter Ticket Availabilities')])
+    event_submit = SubmitField("Create My Event")
 
 #Creates the 'Booking' Form
 class BookingForm(FlaskForm):
