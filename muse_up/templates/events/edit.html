@@ -4,7 +4,8 @@
 
 {% block content %}
 <form method="POST" action="{{ url_for( 'event.edit' , id=id)}}">
-    <div class="container text-start pt-3">
+  {{ form.hidden_tag() }}  
+  <div class="container text-start pt-3">
         <div class="col">
             <h1 style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">Create Event</h1>
         </div>
@@ -20,10 +21,8 @@
             <div class="p2" align = "center">
                   <label for= "validationPhoto"><h4 class="HomePage_Text">Upload Cover Letter</h4></label>
                   <div class="mb-3">
-                    <input class="form-control" type="file" id="validationPhoto" required>
-                    <div class = "invalid-feedback">
-                      Please upload a cover photo.
-                    </div>
+                    {{ form.event_photo.label(class="form-control-label") }}
+                    {{ form.event_photo(class =  "form-control", placeholder ="Enter a file") }}
                   </div>
             </div>
         </div>    
