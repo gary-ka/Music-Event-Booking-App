@@ -43,6 +43,25 @@ def create():
     return redirect(url_for('events.create'))
   return render_template('events/create.html', form=form)
 
+@Eventbp.route('/<id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_event():
+  print('Method type: ', request.method)
+  event = Event.query.get_or_404(id)
+  form = CreateForm()
+  if form.validate_on_submit():
+    #call the function that checks and returns image
+    db_file_path = check_upload_file(form)
+    pass
+    # add the object to the db session
+    db.session.add(event)
+    # commit to the database
+    db.session.commit()
+    flash('Successfully created new event', 'success')
+    #Always end with redirect when form is valid
+    return redirect(url_for('events.edit'))
+  return render_template('events/edit.html', form=form)
+
 def check_upload_file(form):
   #get file data from form  
   fp = form.image.data
@@ -77,3 +96,10 @@ def comment(id):
       # print('Your comment has been added', 'success') 
     # using redirect sends a GET request to destination.show
     return redirect(url_for('events.details', id=id))
+
+@Eventbp.route('/myevents')
+@login_required
+def myevents():
+    return render_template('events/myevents.html')
+
+
