@@ -47,20 +47,12 @@ def create():
 @login_required
 def edit_event():
   print('Method type: ', request.method)
+  event = Event.query.get_or_404(id)
   form = CreateForm()
   if form.validate_on_submit():
     #call the function that checks and returns image
     db_file_path = check_upload_file(form)
-    event = Event(EventName=form.event_name.data,
-                  EventIntro=form.event_introduction.data,
-                  EventDescription=form.event_description.data,
-                  EventMusician=form.event_musician.data,
-                  EventCategory=form.event_category.data,
-                  EventLocation=form.event_location.data,
-                  EventDateTime=form.event_datetime.data,
-                  EventCost=form.event_cost.data,
-                  EventAvailability=form.event_availabilities.data,
-                  Eventimage=db_file_path)
+    pass
     # add the object to the db session
     db.session.add(event)
     # commit to the database
