@@ -97,6 +97,22 @@ def comment(id):
     # using redirect sends a GET request to destination.show
     return redirect(url_for('events.details', id=id))
 
+@Eventbp.route('/cancel_event/<id>')
+@login_required
+def cancel_event(id):
+    event = Event.query.get_or_404(id)
+    event.status = False
+    db.session.commit()
+    return redirect(url_for('events/myevent.html'))
+
+@Eventbp.route('/cancel_event/<id>')
+@login_required
+def cancel_event(id):
+    event = Event.query.get_or_404(id)
+    event.status = True
+    db.session.commit()
+    return redirect(url_for('events/myevent.html'))
+
 @Eventbp.route('/myevents')
 @login_required
 def myevents():
