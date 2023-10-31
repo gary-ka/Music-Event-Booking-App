@@ -105,9 +105,9 @@ def cancel_event(id):
     db.session.commit()
     return redirect(url_for('events/myevent.html'))
 
-@Eventbp.route('/cancel_event/<id>')
+@Eventbp.route('/reopen_event/<id>')
 @login_required
-def cancel_event(id):
+def reopen_event(id):
     event = Event.query.get_or_404(id)
     event.status = True
     db.session.commit()
