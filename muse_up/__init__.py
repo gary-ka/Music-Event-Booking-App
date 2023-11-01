@@ -24,7 +24,7 @@ def create_app():
 
     bootstrap = Bootstrap5(app)
     
-    UPLOAD_FOLDER = '/templates/static/img'
+    UPLOAD_FOLDER = '/static/img/EventPhotos'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
     #initialize the login manager
@@ -63,7 +63,6 @@ def create_app():
     @app.errorhandler(504)
     def server_error(e):
        return render_template("50X.html", error=e)
-    
     
     return app
 
