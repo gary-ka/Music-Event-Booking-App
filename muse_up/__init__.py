@@ -8,6 +8,8 @@ from datetime import datetime
 
 db=SQLAlchemy()
 
+currentdatetime = datetime.now()
+
 #create a function that creates a web application
 # a web server will run this web application
 def create_app():
@@ -61,6 +63,7 @@ def create_app():
     @app.errorhandler(504)
     def server_error(e):
        return render_template("50X.html", error=e)
+    
     
     return app
 

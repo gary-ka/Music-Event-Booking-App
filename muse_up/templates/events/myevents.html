@@ -46,9 +46,24 @@
               {{event.location}}
             </li>
             <li class="list-group-item">
-              <div class="status-open mx-auto text-center">
-                Open
-              </div>
+              {% if event.date > currentdatetime %}
+                <div class="status-open mx-auto text-center">
+                  Open
+                </div>
+                  {% if event.availabilities > 0 %}
+                  <div class="status-soldout mx-auto text-center">
+                    Sold Out
+                  </div>
+                  {% elif event.status == False %}
+                  <div class="status-cancelled mx-auto text-center">
+                    Cancelled
+                  </div>
+                  {% endif %}
+              {% else %}
+                <div class="status-inactive mx-auto text-center">
+                  Inactive
+                </div>
+              {% endif %}
             </li>
             <li class="list-group-item">
               <div class="container mx-auto text-center">
