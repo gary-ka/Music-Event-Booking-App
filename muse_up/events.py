@@ -24,16 +24,18 @@ def create():
   if form.validate_on_submit():
     #call the function that checks and returns image
     db_file_path = check_upload_file(form)
-    event = Event(EventName=form.event_name.data,
-                  EventIntro=form.event_introduction.data,
-                  EventDescription=form.event_description.data,
-                  EventMusician=form.event_musician.data,
-                  EventCategory=form.event_category.data,
-                  EventLocation=form.event_location.data,
-                  EventDateTime=form.event_datetime.data,
-                  EventCost=form.event_cost.data,
-                  EventAvailability=form.event_availabilities.data,
-                  Eventimage=db_file_path)
+    event = Event(name=form.event_name.data,
+                  intro=form.event_introduction.data,
+                  description=form.event_description.data,
+                  musician=form.event_musician.data,
+                  category=form.event_category.data,
+                  location=form.event_location.data,
+                  date=form.event_datetime.data,
+                  price=form.event_cost.data,
+                  availability=form.event_availabilities.data,
+                  image=db_file_path,
+                  status = True,
+                  user_id = current_user.id)
     # add the object to the db session
     db.session.add(event)
     # commit to the database
@@ -64,12 +66,12 @@ def edit_event():
 
 def check_upload_file(form):
   #get file data from form  
-  fp = form.image.data
+  fp = form.event_photo.data
   filename = fp.filename
   #get the current path of the module file… store image file relative to this path  
   BASE_PATH = os.path.dirname(__file__)
   #upload file location – directory of this file/static/image
-  upload_path = os.path.join(BASE_PATH, 'static/image', secure_filename(filename))
+  upload_path = os.path.join(BASE_PATH, 'static/img', secure_filename(filename))
   #store relative path in DB as image location in HTML is relative
   db_upload_path = '/static/img/' + secure_filename(filename)
   #save the file and return the db upload path

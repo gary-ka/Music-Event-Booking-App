@@ -15,8 +15,8 @@ class CreateForm(FlaskForm):
     event_description = TextAreaField('Describe your event', validators=[InputRequired('Enter event description'), Length(min = 1, max = 1000)])
     event_category = SelectField('Music Categories', validators=[InputRequired('Enter music category')], choices=[('text','Pop'), ('text','Classical'), ('text','Jazz'), ('text','Rock'), ('text','Country'), ('text','Hip Hop')])
     event_location = StringField('Location', validators = [InputRequired('Enter Location'), Length(min = 1, max = 100)])
-    event_datetime = DateTimeField('Event Date and Time', validators = [InputRequired('Enter date abnd time')])
-    event_cost = DecimalField('Ticket Cost', places = 2, rounding = set)
+    event_datetime = DateTimeField('Event Date and Time', format='%Y-%m-%dT%H:%M',validators = [InputRequired('Enter date and time')])
+    event_cost = IntegerField('Ticket Cost')
     event_availabilities = IntegerField('Ticket Availabilities', validators = [InputRequired('Enter Ticket Availabilities')])
     event_submit = SubmitField("Create My Event")
 
