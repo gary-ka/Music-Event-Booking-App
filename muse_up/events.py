@@ -6,6 +6,7 @@ import os
 from werkzeug.utils import secure_filename
 #additional import:
 from flask_login import login_required, current_user
+from datetime import datetime
 
 Eventbp = Blueprint('events', __name__, url_prefix='/events')
 
@@ -102,4 +103,7 @@ def comment(id):
 @Eventbp.route('/myevents')
 @login_required
 def myevents():
-    return render_template('events/myevents.html')
+    currentdatetime = datetime.now()
+    user_id = current_user.id
+    myevents = Event.query.filter_by(user_id=user_id).all()
+    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime)

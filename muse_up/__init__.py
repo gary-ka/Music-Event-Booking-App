@@ -8,7 +8,6 @@ from datetime import datetime
 
 db=SQLAlchemy()
 
-currentdatetime = datetime.now()
 
 #create a function that creates a web application
 # a web server will run this web application
