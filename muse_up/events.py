@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Event, Comment
+from .models import Event, Comment, EventStatus
 from .forms import CreateForm, CommentForm, EditForm
 from . import db
 import os
@@ -36,7 +36,7 @@ def create():
                   price=form.event_cost.data,
                   availability=form.event_availabilities.data,
                   image=db_file_path,
-                  status = True,
+                  status = EventStatus.OPEN,
                   user_id = current_user.id)
     # add the object to the db session
     db.session.add(event)
@@ -61,6 +61,7 @@ def edit_event(id):
                     event_datetime=event.date,
                     event_cost=event.price,
                     event_availabilities=event.availability,
+                    event_status = event.status,
                     event_photo=event.image)
   if form.validate_on_submit():
     db_file_path = check_upload_file(form)
@@ -73,6 +74,7 @@ def edit_event(id):
     event.date=form.event_datetime.data
     event.price=form.event_cost.data
     event.availability=form.event_availabilities.data
+    event.status = form.event_status.data
     event.image=db_file_path
     event.user_id = current_user.id
     # commit to the database
