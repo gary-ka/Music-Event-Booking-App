@@ -13,7 +13,7 @@ Eventbp = Blueprint('events', __name__, url_prefix='/events')
 
 @Eventbp.route('/<id>')
 def details(id):
-    event = db.session.query(Event).filter(Event.id == id).scalar()
+    event= db.session.scalar(db.select(Event).where(Event.id==id))
     # create the comment form
     form = CommentForm()    
     return render_template('events/details.html', event=event, form=form)
@@ -47,24 +47,43 @@ def create():
     return redirect(url_for('events.create'))
   return render_template('events/create.html', form=form)
 
-@Eventbp.route('/<id>/edit', methods=['GET', 'POST'])
+@Eventbp.route('/edit/<id>', methods=['GET', 'PUT'])
 @login_required
-def edit_event():
+def edit_event(id):
   print('Method type: ', request.method)
-  event = Event.query.get_or_404(id)
-  form = CreateForm()
+  event= db.session.query(Event).get_or_404(id)
+  form = CreateForm(event_name=event.name,
+                    event_introduction=event.intro,
+                    event_description=event.description,
+                    event_musician=event.musician,
+                    event_category=event.category,
+                    event_location=event.location,
+                    event_datetime=event.date,
+                    event_cost=event.price,
+                    event_availabilities=event.availability,
+                    event_photo=event.image)
   if form.validate_on_submit():
-    #call the function that checks and returns image
     db_file_path = check_upload_file(form)
-    pass
-    # add the object to the db session
-    db.session.add(event)
+    event.name=form.event_name.data
+    event.intro=form.event_introduction.data
+    event.description=form.event_description.data
+    event.musician=form.event_musician.data
+    event.category=form.event_category.data
+    event.location=form.event_location.data
+    event.date=form.event_datetime.data
+    event.price=form.event_cost.data
+    event.availability=form.event_availabilities.data
+    event.image=db_file_path
+    event.user_id = current_user.id
     # commit to the database
-    db.session.commit()
-    flash('Successfully created new event', 'success')
+    try:
+      db.session.commit()  
+      flash('Successfully edited event', 'success')
+    except Exception as e:
+      print("Error")
     #Always end with redirect when form is valid
-    return redirect(url_for('events.edit'))
-  return render_template('events/edit.html', form=form)
+    return redirect(url_for('events.edit_event', id=id))
+  return render_template('events/edit.html', id=id, form=form)
 
 def check_upload_file(form):
   #get file data from form  
@@ -104,6 +123,23 @@ def comment(id):
     #           app.logger.error(f"Validation error for field '{field}': {error}") 
     # using redirect sends a GET request to destination.show
     return redirect(url_for('events.details', id=id))
+
+@Eventbp.route('/cancel_event/<id>', methods=['GET','POST'])
+@login_required
+def cancel_event(id):
+    event = Event.query.get_or_404(id)
+    event.status = False
+    db.session.commit()
+    return redirect(url_for('events.myevent', id=id))
+
+@Eventbp.route('/reopen_event/<id>')
+@login_required
+def reopen_event(id):
+    event = Event.query.get_or_404(id)
+    event.status = True
+    db.session.commit()
+    flash('Event has been Cancelled', 'Cancelled')
+    return redirect(url_for('events/myevent.html'))
 
 @Eventbp.route('/myevents')
 @login_required
