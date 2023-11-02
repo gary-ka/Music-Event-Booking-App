@@ -1,5 +1,5 @@
 #from package import Class
-from flask import Flask 
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -7,6 +7,7 @@ from flask_bcrypt import Bcrypt
 from datetime import datetime
 
 db=SQLAlchemy()
+
 
 #create a function that creates a web application
 # a web server will run this web application
@@ -24,7 +25,7 @@ def create_app():
 
     bootstrap = Bootstrap5(app)
     
-    UPLOAD_FOLDER = '/templates/static/img'
+    UPLOAD_FOLDER = '/static/img/EventPhotos'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
     #initialize the login manager
@@ -49,6 +50,21 @@ def create_app():
     app.register_blueprint(events.destbp)
     from . import auth
     app.register_blueprint(auth.bp)
+
+    from . import events
+    app.register_blueprint(events.Eventbp)
+
+    @app.errorhandler(404) 
+    def not_found(e): 
+      return render_template("404.html", error=e)
+    
+    @app.errorhandler(500)
+    @app.errorhandler(501)
+    @app.errorhandler(502)
+    @app.errorhandler(503)
+    @app.errorhandler(504)
+    def server_error(e):
+       return render_template("50X.html", error=e)
     
     return app
 

@@ -1,0 +1,16 @@
+{% extends "base2.html" %}
+
+{% block content %}
+
+<div class="container" align="center">
+    <div class="row">
+        <div class="col">
+            <h1>Error</h1>
+            <img src="/static/img/others/404.png" height="300px" width="300px">
+            <p>Something went wrong! More info:</p>
+            <p>{{error}}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

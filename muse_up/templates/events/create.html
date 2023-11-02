@@ -1,0 +1,140 @@
+{% extends 'base2.html' %}
+
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+<div class="pg-bg">
+    <main>
+        <div class="container text-start pt-3">
+            <div class="col">
+                <h1 style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">Create Event</h1>
+            </div>
+        </div>
+        <form method="POST" action = "{{url_for('events.create') }}" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <!--Image Drop-->
+            <div class="container img-upload d-flex justify-content-center align-items-center mt-1">
+                <div class="d-flex flex-column align-items-center">
+                    <div class="p2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="white" class="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                        </svg>
+                    </div>
+                    <div class="p2" align = "center">
+                          <label for= "validationPhoto"><h4 class="HomePage_Text">Upload Cover Letter</h4></label>
+                          <div class="mb-3">
+                            {{form.event_photo.label(class = "form-control-label") }}
+                            {{form.event_photo(class = "form-control", placeholder = "Enter a file") }}
+                            <div class = "invalid-feedback">
+                              Please upload a cover photo.
+                            </div>
+                          </div>
+                    </div>
+                </div>    
+            </div>
+            <!--Event Details-->
+            <div class="container text-start my-4">
+                <div class = "row">
+                    <div class="container col-lg-8" >
+                        <div>
+                            <div class="mb-3">
+                                {{ form.event_name.label(class="form-control-label create_subheading") }}
+                                {{ form.event_name(class="form-control", placeholder="Event Title") }}
+                              <div class="invalid-feedback">
+                                Please add an event name.
+                              </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="mb-3">
+                                {{ form.event_introduction.label(class="form-control-label create_subheading") }}
+                                {{ form.event_introduction(class="form-control", placeholder="Event Introduction (50 Words Max.)") }}
+                            </div>
+                        </div>
+                        
+
+                        <div>
+                          <div class="mb-3">
+                            {{ form.event_musician.label(class="form-control-label create_subheading") }}
+                            {{ form.event_musician(class="form-control", placeholder="Musician List (50 Words Max.)") }}
+                              <div class="invalid-feedback">
+                                Please add musicians.
+                              </div>
+                          </div>
+                        </div>
+
+
+                        <div>
+                            <div class="mb-3">
+                                {{ form.event_description.label(class="form-control-label create_subheading") }}
+                                {{ form.event_description(class="form-control", placeholder="Event Description (1000 Words Max)") }}
+                                <div class="invalid-feedback">
+                                  Please add an event description.
+                                </div>                            
+                              </div> 
+                        </div>
+                        
+                    </div>
+                    <div class="container create-details col-lg-4">
+                        <div class="create_subheading2">Enter Event Details</div>
+                        <div>
+                            {{ form.event_category.label(class="form-control-label create_subheading3") }}
+                            {{ form.event_category(class="form-select form-select-md", placeholder="Select Music Category") }}
+                            <div class="invalid-feedback">
+                                Please add a music category.
+                            </div>
+                        </div>
+                        <div>
+                            {{ form.event_location.label(class="form-control-label create_subheading3") }}
+                            {{ form.event_location(class="form-control", list="Venues", placeholder="Find a Location") }}
+                            <datalist id="Venues">
+                                <option value="Brisbane, QLD">
+                                <option value="Sydney, NSW">
+                                <option value="Perth, WA">
+                                <option value="Darwin,NT">
+                                <option value="Adelaide, SA">
+                                <option value="Melbourne, VIC">
+                            </datalist>
+                            <div class="invalid-feedback">
+                                Please add a venue location.
+                            </div>
+                        </div>
+
+                        <div>
+                            {{ form.event_datetime.label(class="form-control-label create_subheading3") }}
+                            {{ form.event_datetime(class="form-control", type="datetime-local") }}
+                            <div class="invalid-feedback">
+                              Please add a date and time.
+                            </div>
+                        </div>
+
+                        <div>
+                            {{ form.event_cost.label(class="form-control-label create_subheading3") }}
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">$</span>
+                                {{ form.event_cost(class="form-control", type="number", min="0") }}
+                                 <span class="input-group-text">.00</span>
+                                 <div class="invalid-feedback">
+                              Please add a ticket price.
+                            </div>
+                            </div>
+
+                        </div>
+
+                        <div>
+                            {{ form.event_availabilities.label(class="form-control-label create_subheading3") }}
+                            {{ form.event_availabilities(class="form-control", type="number", placeholder="Enter number of tickets", min="0", required="required") }}
+                            <div class="invalid-feedback">
+                              Please add ticket availabilities.
+                            </div>
+                        </div>                        
+                    </div>
+                </div>                
+                {{ form.event_submit() }}
+            </div>
+        </form>
+    </main>
+</div>
+{% endblock %}
