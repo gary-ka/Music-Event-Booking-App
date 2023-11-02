@@ -119,13 +119,13 @@ def comment(id):
     # using redirect sends a GET request to destination.show
     return redirect(url_for('events.details', id=id))
 
-@Eventbp.route('/cancel_event/<id>')
+@Eventbp.route('/cancel_event/<id>', methods=['GET','POST'])
 @login_required
 def cancel_event(id):
     event = Event.query.get_or_404(id)
     event.status = False
     db.session.commit()
-    return redirect(url_for('events/myevent.html'))
+    return redirect(url_for('events.myevent', id=id))
 
 @Eventbp.route('/reopen_event/<id>')
 @login_required
@@ -133,6 +133,7 @@ def reopen_event(id):
     event = Event.query.get_or_404(id)
     event.status = True
     db.session.commit()
+    flash('Event has been Cancelled', 'Cancelled')
     return redirect(url_for('events/myevent.html'))
 
 @Eventbp.route('/myevents')
