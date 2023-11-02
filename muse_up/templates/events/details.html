@@ -286,31 +286,21 @@
               </div>
             </form>
         </div> 
+        {% for comment in event.comments %}
         <div class="container mt-3">
           <div class="container comment_box">
             <div class="comment_heading">
-              John Smith
+              {{comment.user.name}}
             </div>
             <div class="comment_body">
-              <p>I love QSO!!!</p>
+              <p>{{comment.text}}</p>
             </div>
             <div class="mt-3 comment_footer">
-              Posted: 12 October 2023 11:59pm
+              Posted: {{comment.created_at}}
             </div>
           </div>
         </div>
+        {% endfor %}
 
-        <div class="container mt-3">
-          <div class="container comment_box">
-            <div class="comment_heading">
-              John Applebess
-            </div>
-            <div class="comment_body">
-              <p>MAHLER!!!!</p>
-            </div>
-            <div class="mt-3 comment_footer">
-              Posted: 14 October 2023 11:59pm
-            </div>
-          </div>
-        </div>
+        
 {% endblock %}
