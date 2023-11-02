@@ -271,11 +271,11 @@
           <h2>Comments</h2>
         </div>
         <div class="container">
-            <form class="was-validated">
+            <form method="POST" action = "{{url_for('events.comment', id=event.id)}}" class="was-validated">
               <div class="mb-3 comment_box">          
                 <div class="container col-lg">
                   <label for="UserComment" class="form-label details-page"><h3>Your Comment</h3></label>
-                  <textarea type="textarea" class="form-control" id="UserComment" rows="3" maxlength="250" placeholder="Write you comment (250 Words Max)" required></textarea>
+                  {{ form.text(class="form-control", rows="3", placeholder="Write your comment (250 Words Max)") }}
                   <div class="invalid-feedback">
                   Please enter your comment.
                   </div>
