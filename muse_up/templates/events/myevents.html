@@ -46,9 +46,11 @@
                   {{event.location}}
                 </li>
                 <li class="list-group-item">
+                  {% if event.status == True %}
                     <div class="status-open mx-auto text-center">
                       Open
                     </div>
+                  {% endif %}
                 </li>
                 <li class="list-group-item">
                   <div class="container mx-auto text-center">
@@ -58,7 +60,6 @@
               </ul>
             </div>
           </div>
-        
         {% endfor %}
       </div>  
       {% else %}    
