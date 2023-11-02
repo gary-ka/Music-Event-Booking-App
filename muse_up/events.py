@@ -7,7 +7,7 @@ from werkzeug.utils import secure_filename
 #additional import:
 from flask_login import login_required, current_user
 from datetime import datetime
-from muse_up import create_app
+
 
 Eventbp = Blueprint('events', __name__, url_prefix='/events')
 
@@ -144,7 +144,8 @@ def reopen_event(id):
 @Eventbp.route('/myevents')
 @login_required
 def myevents():
+    EventStatus_enum = EventStatus
     currentdatetime = datetime.now()
     user_id = current_user.id
     myevents = Event.query.filter_by(user_id=user_id).all()
-    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime)
+    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)

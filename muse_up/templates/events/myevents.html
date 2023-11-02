@@ -46,7 +46,7 @@
                   {{event.location}}
                 </li>
                 <li class="list-group-item">
-                  {% if event.status == True %}
+                  {% if event.status == EventStatus_enum.OPEN %}
                     <div class="status-open mx-auto text-center">
                       Open
                     </div>
@@ -58,12 +58,6 @@
                 </li>
                 <li class="list-group-item">
                   <div class="container mx-auto text-center">
-                  {% if event.status == True %}
-                    <a button type="button" class="btn btn-danger" href="{{ url_for('events.cancel_event', id=id) }}">Cancel</button></a>
-                  {% else %}
-
-                  {% endif%}
-                  
                     <a button type="button" class="btn btn-secondary" href="{{ url_for('events.edit_event', id=event.id)}}">Edit</button></a>
                   </div>
                 </li>
