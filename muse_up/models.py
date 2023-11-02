@@ -1,6 +1,7 @@
 from flask_login import UserMixin
 from . import db
 from datetime import datetime
+import enum
 from enum import Enum
 
 class EventStatus(Enum):

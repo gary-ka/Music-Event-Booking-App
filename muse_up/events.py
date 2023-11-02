@@ -1,12 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Event, Comment
-from .forms import CreateForm, CommentForm
+from .models import Event, Comment, EventStatus
+from .forms import CreateForm, CommentForm, EditForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
 #additional import:
 from flask_login import login_required, current_user
 from datetime import datetime
+from muse_up import create_app
 
 Eventbp = Blueprint('events', __name__, url_prefix='/events')
 
@@ -35,7 +36,7 @@ def create():
                   price=form.event_cost.data,
                   availability=form.event_availabilities.data,
                   image=db_file_path,
-                  status = True,
+                  status = EventStatus.OPEN,
                   user_id = current_user.id)
     # add the object to the db session
     db.session.add(event)
@@ -51,7 +52,7 @@ def create():
 def edit_event(id):
   print('Method type: ', request.method)
   event= db.session.query(Event).get_or_404(id)
-  form = CreateForm(event_name=event.name,
+  form = EditForm(event_name=event.name,
                     event_introduction=event.intro,
                     event_description=event.description,
                     event_musician=event.musician,
@@ -60,6 +61,7 @@ def edit_event(id):
                     event_datetime=event.date,
                     event_cost=event.price,
                     event_availabilities=event.availability,
+                    event_status = event.status,
                     event_photo=event.image)
   if form.validate_on_submit():
     db_file_path = check_upload_file(form)
@@ -72,6 +74,7 @@ def edit_event(id):
     event.date=form.event_datetime.data
     event.price=form.event_cost.data
     event.availability=form.event_availabilities.data
+    event.status = form.event_status.data
     event.image=db_file_path
     event.user_id = current_user.id
     # commit to the database
@@ -102,20 +105,24 @@ def check_upload_file(form):
 @login_required
 def comment(id):  
     form = CommentForm()  
-    #get the destination object associated to the page and the comment
-    event = db.session.scalar(db.select(Event).where(Event.id==id))
     if form.validate_on_submit():  
       #read the comment from the form
-      comment = Comment(Commenttext=form.text.data, 
-                        event=event,
+      comment = Comment(text=form.text.data, 
+                        event_id=id,
                         user=current_user) 
       #here the back-referencing works - comment.destination is set
       # and the link is created
       db.session.add(comment) 
       db.session.commit() 
       #flashing a message which needs to be handled by the html
-      flash('Your comment has been added', 'success')  
-      # print('Your comment has been added', 'success') 
+      flash('Your comment has been added', 'success') 
+    # for debug use  
+    # else:
+    #   app=create_app()
+    #   # Log the form validation errors to help identify the issue
+    #   for field, errors in form.errors.items():
+    #       for error in errors:
+    #           app.logger.error(f"Validation error for field '{field}': {error}") 
     # using redirect sends a GET request to destination.show
     return redirect(url_for('events.details', id=id))
 
