@@ -44,7 +44,7 @@ def create():
     db.session.commit()
     flash('Successfully created new event', 'success')
     #Always end with redirect when form is valid
-    return redirect(url_for('events.create'))
+    return redirect(url_for('events.myevents'))
   return render_template('events/create.html', form=form)
 
 @Eventbp.route('/edit/<id>', methods=['GET', 'POST'])

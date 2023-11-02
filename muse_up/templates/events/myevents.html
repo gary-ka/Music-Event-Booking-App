@@ -1,6 +1,16 @@
 {% extends 'base2.html' %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success text-center alert-txt mx-3" role="alert">
+      {{ message }}
+    </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
 <div class="container text-start pt-3">
   <div class="col">
       <h1 style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">My Events</h1>
