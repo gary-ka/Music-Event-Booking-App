@@ -54,9 +54,11 @@
             </div>
 
               <div class="container event-details col-lg-4 ml-4 mt-5 text-center">
+                  {% if event.status == True %}
                   <div class="status-open mx-auto text-center">
-                    {{event.status}}
+                    Open
                   </div>
+                  {% endif %}
                     <div>
                       <div class='details_subheading3'>Music Category</div>
                       <div class="details-page">
