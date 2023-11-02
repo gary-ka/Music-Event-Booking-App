@@ -36,7 +36,7 @@ class EditForm(FlaskForm):
     event_datetime = DateTimeField('Event Date and Time', format='%Y-%m-%dT%H:%M',validators = [InputRequired('Enter date and time')])
     event_cost = IntegerField('Ticket Cost')
     event_availabilities = IntegerField('Ticket Availabilities', validators = [InputRequired('Enter Ticket Availabilities')])
-    event_submit = SubmitField("Create My Event")
+    event_submit = SubmitField("Edit My Event")
 
 
 #Creates the 'Booking' Form

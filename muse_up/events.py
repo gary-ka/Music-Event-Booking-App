@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Event, Comment
-from .forms import CreateForm, CommentForm
+from .forms import CreateForm, CommentForm, EditForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -52,7 +52,7 @@ def create():
 def edit_event(id):
   print('Method type: ', request.method)
   event= db.session.query(Event).get_or_404(id)
-  form = CreateForm(event_name=event.name,
+  form = EditForm(event_name=event.name,
                     event_introduction=event.intro,
                     event_description=event.description,
                     event_musician=event.musician,
