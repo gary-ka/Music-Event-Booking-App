@@ -271,7 +271,8 @@
           <h2>Comments</h2>
         </div>
         <div class="container">
-            <form method="POST" action = "{{url_for('events.comment', id=event.id)}}" class="was-validated">
+            <form method="POST" action="{{url_for('events.comment', id=event.id)}}" class="was-validated">
+              {{ form.hidden_tag() }}
               <div class="mb-3 comment_box">          
                 <div class="container col-lg">
                   <label for="UserComment" class="form-label details-page"><h3>Your Comment</h3></label>
@@ -280,7 +281,7 @@
                   Please enter your comment.
                   </div>
                   <div class = "mt-3 d-flex flex-column align-items-center">
-                    <button type="Submit" class="btn btn-outline-secondary">Post</button>
+                    {{form.submit()}}
                   </div>
                 </div>      
               </div>
