@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block header %}
           <div id="EventCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active eventbanner-item">
-                <img src="./static/img/EventPhotos/QSO.jpg" class="d-block w-100 eventbanner-img" alt="QSO">
+                <img src="/static/img/EventPhotos/QSO.jpg" class="d-block w-100 eventbanner-img" alt="QSO">
               </div>
             </div>
           </div>
@@ -18,7 +19,7 @@
           <div class = "row">
             <div class="container col-lg-8">
               <div class="mt-5 details_subheading">
-                  QSO Finale
+                  {{event.name}}
               </div>
 
               <div class="mt-3">
