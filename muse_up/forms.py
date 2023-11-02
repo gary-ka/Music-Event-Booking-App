@@ -27,7 +27,6 @@ class CreateForm(FlaskForm):
 class EditForm(FlaskForm):
     event_name = StringField('Name your event', validators=[InputRequired('Enter Event Title'), Length(min = 1, max = 20)])
     event_photo = FileField('Destination Image', validators=[
-    FileRequired(message='Image cannot be empty'),
     FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
     event_introduction = StringField('Introduce your event', validators=[InputRequired('Please enter event introduction'), Length(min = 1, max = 100)])
     event_musician = StringField('Musicians', validators = [InputRequired('Enter a musician'), Length(min = 1, max = 100)])

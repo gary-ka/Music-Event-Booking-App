@@ -47,7 +47,7 @@ def create():
     return redirect(url_for('events.create'))
   return render_template('events/create.html', form=form)
 
-@Eventbp.route('/edit/<id>', methods=['GET', 'PUT'])
+@Eventbp.route('/edit/<id>', methods=['GET', 'POST'])
 @login_required
 def edit_event(id):
   print('Method type: ', request.method)
@@ -64,7 +64,6 @@ def edit_event(id):
                     event_status = event.status,
                     event_photo=event.image)
   if form.validate_on_submit():
-    db_file_path = check_upload_file(form)
     event.name=form.event_name.data
     event.intro=form.event_introduction.data
     event.description=form.event_description.data
@@ -75,7 +74,6 @@ def edit_event(id):
     event.price=form.event_cost.data
     event.availability=form.event_availabilities.data
     event.status = form.event_status.data
-    event.image=db_file_path
     event.user_id = current_user.id
     # commit to the database
     try:
@@ -125,23 +123,6 @@ def comment(id):
     #           app.logger.error(f"Validation error for field '{field}': {error}") 
     # using redirect sends a GET request to destination.show
     return redirect(url_for('events.details', id=id))
-
-@Eventbp.route('/cancel_event/<id>', methods=['GET','POST'])
-@login_required
-def cancel_event(id):
-    event = Event.query.get_or_404(id)
-    event.status = False
-    db.session.commit()
-    return redirect(url_for('events.myevent', id=id))
-
-@Eventbp.route('/reopen_event/<id>')
-@login_required
-def reopen_event(id):
-    event = Event.query.get_or_404(id)
-    event.status = True
-    db.session.commit()
-    flash('Event has been Cancelled', 'Cancelled')
-    return redirect(url_for('events/myevent.html'))
 
 @Eventbp.route('/myevents')
 @login_required
