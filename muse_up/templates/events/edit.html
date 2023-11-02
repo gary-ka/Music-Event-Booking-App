@@ -7,10 +7,10 @@
     <main>
         <div class="container text-start pt-3">
             <div class="col">
-                <h1 style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">Create Event</h1>
+                <h1 style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">Edit Event</h1>
             </div>
         </div>
-        <form method="POST" action = "{{url_for('events.create') }}">
+        <form method="PUT" action="{{ url_for('events.edit_event', id=id) }}" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <!--Image Drop-->
             <div class="container img-upload d-flex justify-content-center align-items-center mt-1">
@@ -24,6 +24,7 @@
                     <div class="p2" align = "center">
                           <label for= "validationPhoto"><h4 class="HomePage_Text">Upload Cover Letter</h4></label>
                           <div class="mb-3">
+                            {{form.event_photo.label(class = "form-control-label") }}
                             {{form.event_photo(class = "form-control", placeholder = "Enter a file") }}
                             <div class = "invalid-feedback">
                               Please upload a cover photo.
@@ -114,8 +115,7 @@
                             <div class="input-group mb-3">
                                 <span class="input-group-text">$</span>
                                 {{ form.event_cost(class="form-control", type="number", min="0") }}
-                                 <span class="input-group-text">.</span>
-                                 {{ form.event_cost(class="form-control", type="number", max="99") }}
+                                 <span class="input-group-text">.00</span>
                                  <div class="invalid-feedback">
                               Please add a ticket price.
                             </div>

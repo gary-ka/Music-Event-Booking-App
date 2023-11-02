@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from . import db
 from datetime import datetime
 
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -51,6 +52,7 @@ class Event(db.Model):
     
     def __repr__(self):
         return f"Event Name: {self.name}"
+
 
 class Booking(db.Model):
     __tablename__ = 'bookings'

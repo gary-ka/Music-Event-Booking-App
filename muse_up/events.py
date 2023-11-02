@@ -6,15 +6,16 @@ import os
 from werkzeug.utils import secure_filename
 #additional import:
 from flask_login import login_required, current_user
+from datetime import datetime
 
 Eventbp = Blueprint('events', __name__, url_prefix='/events')
 
 @Eventbp.route('/<id>')
 def details(id):
-    Event = db.session.scalar(db.select(Event).where(Event.id==id))
+    event= db.session.scalar(db.select(Event).where(Event.id==id))
     # create the comment form
     form = CommentForm()    
-    return render_template('events/details.html', events=Event, form=form)
+    return render_template('events/details.html', event=event, form=form)
 
 @Eventbp.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -24,16 +25,18 @@ def create():
   if form.validate_on_submit():
     #call the function that checks and returns image
     db_file_path = check_upload_file(form)
-    event = Event(EventName=form.event_name.data,
-                  EventIntro=form.event_introduction.data,
-                  EventDescription=form.event_description.data,
-                  EventMusician=form.event_musician.data,
-                  EventCategory=form.event_category.data,
-                  EventLocation=form.event_location.data,
-                  EventDateTime=form.event_datetime.data,
-                  EventCost=form.event_cost.data,
-                  EventAvailability=form.event_availabilities.data,
-                  Eventimage=db_file_path)
+    event = Event(name=form.event_name.data,
+                  intro=form.event_introduction.data,
+                  description=form.event_description.data,
+                  musician=form.event_musician.data,
+                  category=form.event_category.data,
+                  location=form.event_location.data,
+                  date=form.event_datetime.data,
+                  price=form.event_cost.data,
+                  availability=form.event_availabilities.data,
+                  image=db_file_path,
+                  status = True,
+                  user_id = current_user.id)
     # add the object to the db session
     db.session.add(event)
     # commit to the database
@@ -43,33 +46,52 @@ def create():
     return redirect(url_for('events.create'))
   return render_template('events/create.html', form=form)
 
-@Eventbp.route('/<id>/edit', methods=['GET', 'POST'])
+@Eventbp.route('/edit/<id>', methods=['GET', 'PUT'])
 @login_required
-def edit_event():
+def edit_event(id):
   print('Method type: ', request.method)
-  event = Event.query.get_or_404(id)
-  form = CreateForm()
+  event= db.session.query(Event).get_or_404(id)
+  form = CreateForm(event_name=event.name,
+                    event_introduction=event.intro,
+                    event_description=event.description,
+                    event_musician=event.musician,
+                    event_category=event.category,
+                    event_location=event.location,
+                    event_datetime=event.date,
+                    event_cost=event.price,
+                    event_availabilities=event.availability,
+                    event_photo=event.image)
   if form.validate_on_submit():
-    #call the function that checks and returns image
     db_file_path = check_upload_file(form)
-    pass
-    # add the object to the db session
-    db.session.add(event)
+    event.name=form.event_name.data
+    event.intro=form.event_introduction.data
+    event.description=form.event_description.data
+    event.musician=form.event_musician.data
+    event.category=form.event_category.data
+    event.location=form.event_location.data
+    event.date=form.event_datetime.data
+    event.price=form.event_cost.data
+    event.availability=form.event_availabilities.data
+    event.image=db_file_path
+    event.user_id = current_user.id
     # commit to the database
-    db.session.commit()
-    flash('Successfully created new event', 'success')
+    try:
+      db.session.commit()  
+      flash('Successfully edited event', 'success')
+    except Exception as e:
+      print("Error")
     #Always end with redirect when form is valid
-    return redirect(url_for('events.edit'))
-  return render_template('events/edit.html', form=form)
+    return redirect(url_for('events.edit_event', id=id))
+  return render_template('events/edit.html', id=id, form=form)
 
 def check_upload_file(form):
   #get file data from form  
-  fp = form.image.data
+  fp = form.event_photo.data
   filename = fp.filename
   #get the current path of the module file… store image file relative to this path  
   BASE_PATH = os.path.dirname(__file__)
   #upload file location – directory of this file/static/image
-  upload_path = os.path.join(BASE_PATH, 'static/image', secure_filename(filename))
+  upload_path = os.path.join(BASE_PATH, 'static/img', secure_filename(filename))
   #store relative path in DB as image location in HTML is relative
   db_upload_path = '/static/img/' + secure_filename(filename)
   #save the file and return the db upload path
@@ -116,4 +138,7 @@ def reopen_event(id):
 @Eventbp.route('/myevents')
 @login_required
 def myevents():
-    return render_template('events/myevents.html')
+    currentdatetime = datetime.now()
+    user_id = current_user.id
+    myevents = Event.query.filter_by(user_id=user_id).all()
+    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime)
