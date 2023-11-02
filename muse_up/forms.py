@@ -1,8 +1,9 @@
 
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, SelectField, DateTimeField, IntegerField, DecimalField
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, SelectField, DateTimeField, IntegerField, RadioField
 from wtforms.validators import InputRequired, Length, Email, EqualTo
 from flask_wtf.file import FileRequired, FileField, FileAllowed
+from .models import EventStatus
 
 ALLOWED_FILE = {'PNG', 'JPG', 'JPEG', 'png', 'jpg', 'jpeg', 'jfif'}
 
@@ -21,6 +22,23 @@ class CreateForm(FlaskForm):
     event_cost = IntegerField('Ticket Cost')
     event_availabilities = IntegerField('Ticket Availabilities', validators = [InputRequired('Enter Ticket Availabilities')])
     event_submit = SubmitField("Create My Event")
+
+# Form for Editing Events
+class EditForm(FlaskForm):
+    event_name = StringField('Name your event', validators=[InputRequired('Enter Event Title'), Length(min = 1, max = 20)])
+    event_photo = FileField('Destination Image', validators=[
+    FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
+    event_introduction = StringField('Introduce your event', validators=[InputRequired('Please enter event introduction'), Length(min = 1, max = 100)])
+    event_musician = StringField('Musicians', validators = [InputRequired('Enter a musician'), Length(min = 1, max = 100)])
+    event_description = TextAreaField('Describe your event', validators=[InputRequired('Enter event description'), Length(min = 1, max = 1000)])
+    event_category = SelectField('Music Categories', validators=[InputRequired('Enter music category')], choices=[('text','Pop'), ('text','Classical'), ('text','Jazz'), ('text','Rock'), ('text','Country'), ('text','Hip Hop')])
+    event_location = StringField('Location', validators = [InputRequired('Enter Location'), Length(min = 1, max = 100)])
+    event_datetime = DateTimeField('Event Date and Time', format='%Y-%m-%dT%H:%M',validators = [InputRequired('Enter date and time')])
+    event_cost = IntegerField('Ticket Cost')
+    event_availabilities = IntegerField('Ticket Availabilities', validators = [InputRequired('Enter Ticket Availabilities')])
+    event_status = RadioField('Event Status', choices = [(EventStatus.OPEN, EventStatus.OPEN.value), (EventStatus.CANCELLED, EventStatus.CANCELLED.value)])
+    event_submit = SubmitField("Edit My Event")
+
 
 #Creates the 'Booking' Form
 class BookingForm(FlaskForm):

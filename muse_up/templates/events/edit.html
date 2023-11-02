@@ -75,6 +75,22 @@
                                 </div>                            
                               </div> 
                         </div>
+
+                        <div>
+                            <div class="mt-3">
+                                {{ form.event_status.label(class="form-control-label create_subheading") }}
+                            </div>
+                                <div>
+                                {% for subfield in form.event_status %}
+                                    <tr>
+                                        <div>
+                                            <td>{{ subfield }}</td>
+                                            <td>{{ subfield.label }}</td>
+                                        </div> 
+                                    </tr>
+                                {% endfor %}                          
+                              </div> 
+                        </div>
                         
                     </div>
                     <div class="container create-details col-lg-4">
