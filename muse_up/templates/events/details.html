@@ -124,7 +124,16 @@
 
                   <!--Ticket Booking-->
                   <div class="mt-3 text-center">
-                    <a button type="button" class="btn btn-secondary booking_btn text-center" href="{{url_for('events.book', id=event.id)}}">Book Tickets</button></a>
+                  {% if event.status == 'Cancelled' %}
+                    <a button type="button" class="btn btn-secondary text-center disabled" href="{{url_for('events.book', id=event.id)}}" >Book Tickets</button></a>
+                  {% elif event.availability == 0 %}
+                    <a button type="button" class="btn btn-secondary text-center disabled" href="{{url_for('events.book', id=event.id)}}" >Book Tickets</button></a>
+                  {% elif currentdatetime > event.date %}
+                    <a button type="button" class="btn btn-secondary text-center disabled" href="{{url_for('events.book', id=event.id)}}" >Book Tickets</button></a>
+                  {% elif event.status == 'Open' %}
+                    <a button type="button" class="btn btn-secondary text-center" href="{{url_for('events.book', id=event.id)}}" >Book Tickets</button></a>
+                  {% endif %}
+                    
                   </div>
               </div>
             </div>
