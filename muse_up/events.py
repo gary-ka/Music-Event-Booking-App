@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Event, Comment, EventStatus, Booking
+from .models import Event, Comment, Booking
 from .forms import CreateForm, CommentForm, EditForm, BookingForm
 from . import db
 import os
@@ -14,9 +14,11 @@ Eventbp = Blueprint('events', __name__, url_prefix='/events')
 @Eventbp.route('/<id>')
 def details(id):
     event= db.session.scalar(db.select(Event).where(Event.id==id))
+    EventStatus = Event.status
+    currentdatetime = datetime.now()
     # create the comment form
     form = CommentForm()    
-    return render_template('events/details.html', event=event, form=form)
+    return render_template('events/details.html', event=event, form=form, currentdatetime=currentdatetime, EventStatus=EventStatus)
 
 @Eventbp.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -190,7 +192,7 @@ def Allevents():
 @login_required
 def book(id):
    form = BookingForm()
-   if request.method == 'POST':
+   if form.validate_on_submit():
       booking = Booking(num_tickets = form.booking_tickets.data,
                         card_name = form.booking_cardName.data,
                         card_num = form.booking_cardNo.data,

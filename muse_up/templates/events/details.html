@@ -5,7 +5,7 @@
           <div id="EventCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active eventbanner-item">
-                <img src="/static/img/EventPhotos/QSO.jpg" class="d-block w-100 eventbanner-img" alt="QSO">
+                <img src="{{event.image}}" class="d-block w-100 eventbanner-img" alt="QSO">
               </div>
             </div>
           </div>
@@ -54,11 +54,23 @@
             </div>
 
               <div class="container event-details col-lg-4 ml-4 mt-5 text-center">
-                  {% if event.status == True %}
+                {% if event.status == 'Cancelled' %}
+                  <div class="status-cancelled mx-auto text-center">
+                    Cancelled
+                  </div>
+                {% elif event.availability == 0 %}
+                  <div class="status-soldout mx-auto text-center">
+                    Sold Out
+                  </div>
+                {% elif currentdatetime > event.date %}
+                  <div class="status-inactive mx-auto text-center">
+                    Inactive
+                  </div>
+                {% elif event.status == 'Open' %}
                   <div class="status-open mx-auto text-center">
                     Open
                   </div>
-                  {% endif %}
+                {% endif %}
                     <div>
                       <div class='details_subheading3'>Music Category</div>
                       <div class="details-page">
@@ -112,9 +124,7 @@
 
                   <!--Ticket Booking-->
                   <div class="mt-3 text-center">
-                    <form method="POST" action="{{url_for('events.book', id=event.id)}}">
-                    <button type="submit" class="btn btn-secondary booking_btn text-center">Book Tickets</button>
-                  </form>
+                    <a button type="button" class="btn btn-secondary booking_btn text-center" href="{{url_for('events.book', id=event.id)}}">Book Tickets</button></a>
                   </div>
               </div>
             </div>
@@ -125,8 +135,12 @@
                 <div class="col center">
                   <div class="row">
                     <div class = "container text-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                      </svg>
                       <!-- <img src="./static/img/MusicianProfile/qso.jfif" alt="Avatar" class="profile"> -->
-                      <h6>{{event.musician}}</h6>
+                      <h6>{{event.user.name}}</h6>
                     </div>
                   </div>
                 </div>  
