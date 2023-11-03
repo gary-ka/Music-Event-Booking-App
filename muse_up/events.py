@@ -173,7 +173,7 @@ def book(id):
 @login_required
 def mybookings():
    user_id = current_user.id
-   booking_date = datetime.now()
+   booking_date = datetime.now().date()
    bookings = Booking.query.filter_by(user_id=user_id).all()
    return render_template('history.html', bookings=bookings, booking_date=booking_date, user=current_user)
    
