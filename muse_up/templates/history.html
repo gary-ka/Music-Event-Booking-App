@@ -9,8 +9,8 @@
             {% for booking in user.bookings %}
             <div class="container mb-3 history_log">
                 <div class="row align-items-center">
-                    <div class="container col-xxl-4 col-md-12 mt-md-1">
-                        <img src="./static/img/EventPhotos/QSO.jpg" class="history_img" alt="QSO">
+                    <div class="container col-xxl-6 col-md-12 mt-md-1">
+                        <img src="{{booking.event.image}}" class="history_img" alt="QSO">
                     </div>
                     <div class="container col-xxl-6 col-md-12 mt-md-3">
                         <div class="history_heading">
