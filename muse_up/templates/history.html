@@ -6,7 +6,7 @@
             <div class="container col-lg history_heading pt-3">
                 My Booking History
             </div>
-
+            {% for booking in user.bookings %}
             <div class="container mb-3 history_log">
                 <div class="row align-items-center">
                     <div class="container col-xxl-4 col-md-12 mt-md-1">
@@ -14,25 +14,21 @@
                     </div>
                     <div class="container col-xxl-6 col-md-12 mt-md-3">
                         <div class="history_heading">
-                            Booking: QSO Finale
+                            Booking: {{booking.event.name}}
                         </div>
                         <div class="history_text">
-                            Booking Date: 16/07/2023 17:00pm
+                            Booking Date: {{booking_date}}
                         </div>
                         <div class="history_text">
-                            Booking ID: 2214323
+                            Booking ID: {{booking.id}}
                         </div>
                         <div class="history_text">
-                            Number of Tickets: 2
-                        </div>
-                        <div class="history_text mt-2">
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#EmailTickets">
-                                Email tickets
-                            </button>
+                            Number of Tickets: {{booking.num_tickets}}
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
           
             
         </main>
