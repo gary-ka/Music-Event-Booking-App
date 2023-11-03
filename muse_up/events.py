@@ -137,6 +137,55 @@ def myevents():
     myevents = Event.query.filter_by(user_id=user_id).all()
     return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
 
+@Eventbp.route('/event/pop')
+def Popevents():
+    EventStatus = Event.status
+    currentdatetime = datetime.now()
+    Popevents = Event.query.filter_by(category='Pop').all()
+    return render_template('pop.html', Popevents=Popevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
+
+@Eventbp.route('/event/rock')
+def Rockevents():
+    EventStatus = Event.status
+    currentdatetime = datetime.now()
+    Rockevents = Event.query.filter_by(category='Rock').all()
+    return render_template('rock.html', Rockevents=Rockevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
+
+@Eventbp.route('/event/classical')
+def Classicevents():
+    EventStatus = Event.status
+    currentdatetime = datetime.now()
+    Classicevents = Event.query.filter_by(category='Classical').all()
+    return render_template('classical.html', Classicevents=Classicevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
+
+@Eventbp.route('/event/jazz')
+def Jazzevents():
+    EventStatus = Event.status
+    currentdatetime = datetime.now()
+    Jazzevents = Event.query.filter_by(category='Jazz').all()
+    return render_template('jazz.html', Jazzevents=Jazzevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
+
+@Eventbp.route('/event/country')
+def Countryevents():
+    EventStatus = Event.status
+    currentdatetime = datetime.now()
+    Countryevents = Event.query.filter_by(category='Country').all()
+    return render_template('country.html', Countryevents=Countryevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
+
+@Eventbp.route('/event/hiphop')
+def HipHopevents():
+    EventStatus = Event.status
+    currentdatetime = datetime.now()
+    HipHopevents = Event.query.filter_by(category='HipHop').all()
+    return render_template('hiphop.html', HipHopEvents=HipHopevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
+
+@Eventbp.route('/event/all')
+def Allevents():
+    EventStatus = Event.status
+    currentdatetime = datetime.now()
+    Allevents = Event.query.all()
+    return render_template('all.html', Allevents=Allevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
+
 @Eventbp.route('/book/<id>', methods=['GET','POST'])
 @login_required
 def book(id):
