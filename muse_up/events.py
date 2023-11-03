@@ -151,6 +151,7 @@ def myevents():
     return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
 
 @Eventbp.route('/event/pop')
+@login_required
 def Popevents():
     EventStatus_enum = EventStatus
     currentdatetime = datetime.now()
