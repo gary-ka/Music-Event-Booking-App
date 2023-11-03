@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Event, Comment, EventStatus
-from .forms import CreateForm, CommentForm, EditForm
+from .models import Event, Comment, EventStatus, Booking
+from .forms import CreateForm, CommentForm, EditForm, BookingForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -148,4 +148,41 @@ def myevents():
     currentdatetime = datetime.now()
     user_id = current_user.id
     myevents = Event.query.filter_by(user_id=user_id).all()
-    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, OPEN=EventStatus.OPEN, CANCELLED=EventStatus.CANCELLED)
+    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+
+@Eventbp.route('/book/<id>', methods=['GET','POST'])
+@login_required
+def book(id):
+   form = BookingForm()
+   if request.method == 'POST':
+      booking = Booking(num_tickets = form.booking_tickets.data,
+                        card_name = form.booking_cardName.data,
+                        card_num = form.booking_cardNo.data,
+                        cvv = form.booking_cardCVV.data,
+                        year = form.booking_cardYear.data,
+                        month = form.Booking_cardMonth.data,
+                        user_id = current_user.id,
+                        event_id = id)
+      db.session.add(booking) 
+      db.session.commit()
+      return redirect(url_for('events.mybookings'))
+   return render_template('book.html', form=form)
+
+@Eventbp.route('/mybookings')
+@login_required
+def mybookings():
+   user_id = current_user.id
+   booking_date = datetime.now().date()
+   bookings = Booking.query.filter_by(user_id=user_id).all()
+   return render_template('history.html', bookings=bookings, booking_date=booking_date, user=current_user)
+   
+      
+
+
+
+
+
+
+
+      
+      
