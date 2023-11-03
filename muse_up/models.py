@@ -62,6 +62,7 @@ class Booking(db.Model):
     cvv = db.Column(db.Integer, nullable=False)
     month = db.Column(db.String(9), nullable=False)
     year = db.Column(db.Integer, nullable=False)
+    booking_date = db.Column(db.DateTime,nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))

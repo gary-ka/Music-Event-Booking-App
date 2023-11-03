@@ -201,7 +201,8 @@ def book(id):
                         year = form.booking_cardYear.data,
                         month = form.booking_cardMonth.data,
                         user_id = current_user.id,
-                        event_id = id)
+                        event_id = id,
+                        booking_date = datetime.now())
       db.session.add(booking) 
       db.session.commit()
       return redirect(url_for('events.mybookings'))
@@ -211,7 +212,7 @@ def book(id):
 @login_required
 def mybookings():
    user_id = current_user.id
-   booking_date = datetime.now().date()
+   booking_date = Booking.booking_date
    bookings = Booking.query.filter_by(user_id=user_id).all()
    return render_template('history.html', bookings=bookings, booking_date=booking_date, user=current_user)
    
