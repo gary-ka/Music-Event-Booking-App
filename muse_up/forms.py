@@ -44,7 +44,7 @@ class EditForm(FlaskForm):
 class BookingForm(FlaskForm):
     booking_tickets = IntegerField('Number of Tickets', validators=[InputRequired('Enter Number of Tickets')])
     booking_cardName = StringField('Card Nameholder', validators=[InputRequired('Enter Card Nameholder')])
-    booking_cardNo = IntegerField('Card Number', validators=[InputRequired('Enter Card Number'), Length(min=12, max=12)])
+    booking_cardNo = IntegerField('Card Number', validators=[InputRequired('Enter Card Number'), Length(min=16, max=16)])
     booking_cardCVV = IntegerField('Card CVV', validators = [InputRequired('Enter Card CVV'), Length(min=3,max=3)])
     Booking_cardMonth = SelectField('Expiry Month', validators=[InputRequired('Enter Card Expiry Month')], choices=[('text', 'January'), 
                                                                                                                     ('text', 'February'), 
@@ -59,6 +59,7 @@ class BookingForm(FlaskForm):
                                                                                                                     ('text', 'November'), 
                                                                                                                     ('text', 'December')])
     booking_cardYear = IntegerField('Expiry Year', validators= [InputRequired('Enter Card Expiry Year'), Length(min=4, max= 4)])
+    submit = SubmitField("Book")
 
 #creates the login information
 class LoginForm(FlaskForm):
