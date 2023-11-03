@@ -166,7 +166,7 @@ def book(id):
       db.session.add(booking) 
       db.session.commit()
       return redirect(url_for('events.mybookings'), form=form)
-   return render_template('book.html')
+   return render_template('book.html', form=form, id=id)
 
 @Eventbp.route('/mybookings')
 @login_required
