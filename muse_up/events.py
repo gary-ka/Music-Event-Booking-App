@@ -178,8 +178,8 @@ def Countryevents():
 def HipHopevents():
     EventStatus = Event.status
     currentdatetime = datetime.now()
-    HipHopevents = Event.query.filter_by(category='HipHop').all()
-    return render_template('hiphop.html', HipHopEvents=HipHopevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
+    HipHopevents = Event.query.filter_by(category='Hip Hop').all()
+    return render_template('hiphop.html', HipHopevents=HipHopevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
 
 @Eventbp.route('/event/all')
 def Allevents():
