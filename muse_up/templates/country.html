@@ -38,10 +38,11 @@
       <h1 align="center">Let's see what's on!</h1>
     </div>
     <section id="categories-section">
-      <h2>Categories</h2>
-      <div class="row">
+      <h2 align="center">Categories</h2>
+      <div class="container">
+        <div class="row">
         <div class="col-12">
-          <div class="btn-group d-flex" role="group" aria-label="Category Buttons">
+          <div class="btn-group d-flex" role="group" aria-label="Category Buttons"> 
             <a href="{{ url_for('events.Allevents')}}" button type="button" class="btn btn-secondary">All</a>
             <a href="{{ url_for('events.Popevents')}}" button type="button" class="btn btn-secondary">Pop</a>
             <a href="{{ url_for('events.Classicevents')}}" button type="button" class="btn btn-secondary">Classical</a>
@@ -52,11 +53,17 @@
           </div>
         </div>
       </div>
-    </section>
-    <div class="container mt-4">
-      <h1>Country Events</h1>
-      <div class="row">
+      </div>
+      </section>
+      <div class="container text-start pt-3">
+        <div class="col">
+            <h1 style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">Country Events</h1>
+        </div>
+      </div>
+
+      <div class="container col-md mt-3">
         {% if Countryevents %}
+        <div class="row row-col-1 row-cols-md-4 g-4">
           {% for event in Countryevents %}
             <div class="col-lg-3">
               <div class="card">
@@ -94,7 +101,7 @@
                     {{ event.price }}
                   </li>
                   <li class="list-group-item">
-                    {% if event.status == EventStatus_enum.CANCELLED %}
+                    {% if event.status == 'Cancelled' %}
                       <div class="status-cancelled mx-auto text-center">
                         Cancelled
                       </div>
@@ -106,7 +113,7 @@
                       <div class="status-inactive mx-auto text-center">
                         Inactive
                       </div>
-                    {% elif event.status == EventStatus_enum.OPEN %}
+                    {% elif event.status == 'Open' %}
                       <div class="status-open mx-auto text-center">
                         Open
                       </div>

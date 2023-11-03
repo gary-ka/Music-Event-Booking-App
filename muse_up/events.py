@@ -128,23 +128,6 @@ def comment(id):
     # using redirect sends a GET request to destination.show
     return redirect(url_for('events.details', id=id))
 
-@Eventbp.route('/cancel_event/<id>', methods=['GET','POST'])
-@login_required
-def cancel_event(id):
-    event = Event.query.get_or_404(id)
-    event.status = False
-    db.session.commit()
-    return redirect(url_for('events.myevent', id=id))
-
-@Eventbp.route('/reopen_event/<id>')
-@login_required
-def reopen_event(id):
-    event = Event.query.get_or_404(id)
-    event.status = True
-    db.session.commit()
-    flash('Event has been Cancelled', 'Cancelled')
-    return redirect(url_for('events/myevent.html'))
-
 @Eventbp.route('/myevents')
 @login_required
 def myevents():
@@ -152,54 +135,53 @@ def myevents():
     currentdatetime = datetime.now()
     user_id = current_user.id
     myevents = Event.query.filter_by(user_id=user_id).all()
-    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
 
 @Eventbp.route('/event/pop')
-@login_required
 def Popevents():
-    EventStatus_enum = EventStatus
+    EventStatus = Event.status
     currentdatetime = datetime.now()
     Popevents = Event.query.filter_by(category='Pop').all()
-    return render_template('pop.html', Popevents=Popevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+    return render_template('pop.html', Popevents=Popevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
 
 @Eventbp.route('/event/rock')
 def Rockevents():
-    EventStatus_enum = EventStatus
+    EventStatus = Event.status
     currentdatetime = datetime.now()
     Rockevents = Event.query.filter_by(category='Rock').all()
-    return render_template('rock.html', Rockevents=Rockevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+    return render_template('rock.html', Rockevents=Rockevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
 
 @Eventbp.route('/event/classical')
 def Classicevents():
-    EventStatus_enum = EventStatus
+    EventStatus = Event.status
     currentdatetime = datetime.now()
     Classicevents = Event.query.filter_by(category='Classical').all()
-    return render_template('classical.html', Classicevents=Classicevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+    return render_template('classical.html', Classicevents=Classicevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
 
 @Eventbp.route('/event/jazz')
 def Jazzevents():
-    EventStatus_enum = EventStatus
+    EventStatus = Event.status
     currentdatetime = datetime.now()
     Jazzevents = Event.query.filter_by(category='Jazz').all()
-    return render_template('jazz.html', Jazzevents=Jazzevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+    return render_template('jazz.html', Jazzevents=Jazzevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
 
 @Eventbp.route('/event/country')
 def Countryevents():
-    EventStatus_enum = EventStatus
+    EventStatus = Event.status
     currentdatetime = datetime.now()
     Countryevents = Event.query.filter_by(category='Country').all()
-    return render_template('country.html', Countryevents=Countryevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+    return render_template('country.html', Countryevents=Countryevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
 
 @Eventbp.route('/event/hiphop')
 def HipHopevents():
-    EventStatus_enum = EventStatus
+    EventStatus = Event.status
     currentdatetime = datetime.now()
     HipHopevents = Event.query.filter_by(category='HipHop').all()
-    return render_template('hiphop.html', HipHopEvents=HipHopevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+    return render_template('hiphop.html', HipHopEvents=HipHopevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
 
 @Eventbp.route('/event/all')
 def Allevents():
-    EventStatus_enum = EventStatus
+    EventStatus = Event.status
     currentdatetime = datetime.now()
     Allevents = Event.query.all()
-    return render_template('all.html', Allevents=Allevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+    return render_template('all.html', Allevents=Allevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
