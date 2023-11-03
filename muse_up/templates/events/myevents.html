@@ -56,7 +56,7 @@
                   {{event.location}}
                 </li>
                 <li class="list-group-item">
-                  {% if event.status == CANCELLED %}
+                  {% if event.status == 'Cancelled' %}
                     <div class="status-cancelled mx-auto text-center">
                       Cancelled
                     </div>
@@ -68,7 +68,7 @@
                     <div class="status-inactive mx-auto text-center">
                       Inactive
                     </div>
-                  {% elif event.status == OPEN %}
+                  {% elif event.status == 'Open' %}
                     <div class="status-open mx-auto text-center">
                       Open
                     </div>

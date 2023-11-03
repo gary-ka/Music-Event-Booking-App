@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Event, Comment, EventStatus
+from .models import Event, Comment
 from .forms import CreateForm, CommentForm, EditForm
 from . import db
 import os
@@ -36,7 +36,7 @@ def create():
                   price=form.event_cost.data,
                   availability=form.event_availabilities.data,
                   image=db_file_path,
-                  status = EventStatus.OPEN,
+                  status = 'Open',
                   user_id = current_user.id)
     # add the object to the db session
     db.session.add(event)
@@ -61,27 +61,31 @@ def edit_event(id):
                     event_datetime=event.date,
                     event_cost=event.price,
                     event_availabilities=event.availability,
-                    event_status = EventStatus.OPEN,
+                    event_status = event.status,
                     event_photo=event.image)
-  event.name=form.event_name.data
-  event.intro=form.event_introduction.data
-  event.description=form.event_description.data
-  event.musician=form.event_musician.data
-  event.category=form.event_category.data
-  event.location=form.event_location.data
-  event.date=form.event_datetime.data
-  event.price=form.event_cost.data
-  event.availability=form.event_availabilities.data
-  event.status = form.event_status.data
-  event.user_id = current_user.id
   if form.validate_on_submit():
+    event.name=form.event_name.data
+    event.intro=form.event_introduction.data
+    event.description=form.event_description.data
+    event.musician=form.event_musician.data
+    event.category=form.event_category.data
+    event.location=form.event_location.data
+    event.date=form.event_datetime.data
+    event.price=form.event_cost.data
+    event.availability=form.event_availabilities.data
+    event.status = form.event_status.data
+    event.user_id = current_user.id
     # commit to the database
+    print('Form is valid, processing data')
     try:
-      db.session.commit()  
-      flash('Successfully edited event', 'success')
+        db.session.commit()
+        flash('Successfully edited event', 'success')
     except Exception as e:
-      print("Error")
-    #Always end with redirect when form is valid
+        print(e, 'error')
+
+    # Print statements for debugging
+    print('Redirecting to edit_event route')
+
     return redirect(url_for('events.edit_event', id=id))
   return render_template('events/edit.html', id=id, form=form)
 
@@ -144,8 +148,8 @@ def reopen_event(id):
 @Eventbp.route('/myevents')
 @login_required
 def myevents():
-    EventStatus_enum = EventStatus
+    EventStatus= Event.status
     currentdatetime = datetime.now()
     user_id = current_user.id
     myevents = Event.query.filter_by(user_id=user_id).all()
-    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, OPEN=EventStatus.OPEN, CANCELLED=EventStatus.CANCELLED)
+    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
