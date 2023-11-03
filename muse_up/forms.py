@@ -36,7 +36,7 @@ class EditForm(FlaskForm):
     event_datetime = DateTimeField('Event Date and Time', format='%Y-%m-%dT%H:%M',validators = [InputRequired('Enter date and time')])
     event_cost = IntegerField('Ticket Cost')
     event_availabilities = IntegerField('Ticket Availabilities', validators = [InputRequired('Enter Ticket Availabilities')])
-    event_status = RadioField('Event Status', choices = [(EventStatus.OPEN, EventStatus.OPEN.value), (EventStatus.CANCELLED, EventStatus.CANCELLED.value)])
+    event_status = RadioField('Event Status', choices = [(EventStatus.OPEN, 'Open'), (EventStatus.CANCELLED, 'Cancelled')])
     event_submit = SubmitField("Edit My Event")
 
 

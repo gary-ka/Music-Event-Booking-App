@@ -61,28 +61,27 @@ def edit_event(id):
                     event_datetime=event.date,
                     event_cost=event.price,
                     event_availabilities=event.availability,
-                    event_status = event.status,
+                    event_status = EventStatus.OPEN,
                     event_photo=event.image)
-  if form.validate_on_submit():
-    event.name=form.event_name.data
-    event.intro=form.event_introduction.data
-    event.description=form.event_description.data
-    event.musician=form.event_musician.data
-    event.category=form.event_category.data
-    event.location=form.event_location.data
-    event.date=form.event_datetime.data
-    event.price=form.event_cost.data
-    event.availability=form.event_availabilities.data
-    event.status = form.event_status.data
-    event.user_id = current_user.id
-    # commit to the database
-    try:
-      db.session.commit()  
-      flash('Successfully edited event', 'success')
-    except Exception as e:
-      print("Error")
-    #Always end with redirect when form is valid
-    return redirect(url_for('events.edit_event', id=id))
+  event.name=form.event_name.data
+  event.intro=form.event_introduction.data
+  event.description=form.event_description.data
+  event.musician=form.event_musician.data
+  event.category=form.event_category.data
+  event.location=form.event_location.data
+  event.date=form.event_datetime.data
+  event.price=form.event_cost.data
+  event.availability=form.event_availabilities.data
+  event.status = form.event_status.data
+  event.user_id = current_user.id
+  # commit to the database
+  try:
+    db.session.commit()  
+    flash('Successfully edited event', 'success')
+  except Exception as e:
+    print("Error")
+  #Always end with redirect when form is valid
+  return redirect(url_for('events.edit_event', id=id))
   return render_template('events/edit.html', id=id, form=form)
 
 def check_upload_file(form):
@@ -148,4 +147,4 @@ def myevents():
     currentdatetime = datetime.now()
     user_id = current_user.id
     myevents = Event.query.filter_by(user_id=user_id).all()
-    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, OPEN=EventStatus.OPEN, CANCELLED=EventStatus.CANCELLED)
