@@ -1,12 +1,6 @@
 from flask_login import UserMixin
 from . import db
 from datetime import datetime
-import enum
-from enum import Enum
-
-class EventStatus(Enum):
-    OPEN = 'Open'
-    CANCELLED = 'Cancelled'
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -38,8 +32,8 @@ class Comment(db.Model):
     
 class Event(db.Model):
     __tablename__ = 'events'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), index=True, unique=True, nullable=False)
+    id = db.Column(db.Integer, unique=True, primary_key=True)
+    name = db.Column(db.String(100), index=True, nullable=False)
     intro = db.Column(db.String(500), nullable=False)
     musician = db.Column(db.String(500), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
@@ -49,7 +43,7 @@ class Event(db.Model):
     price = db.Column(db.Integer, nullable=False)
     availability = db.Column(db.Integer, nullable=False)
     image = db.Column(db.String(400))
-    status = db.Column(db.Enum(EventStatus), default = EventStatus.OPEN)
+    status = db.Column(db.String(), default="OPEN")
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.relationship('Comment', backref='event')

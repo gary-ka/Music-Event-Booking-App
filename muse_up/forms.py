@@ -3,7 +3,6 @@ from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, SelectField, DateTimeField, IntegerField, RadioField
 from wtforms.validators import InputRequired, Length, Email, EqualTo
 from flask_wtf.file import FileRequired, FileField, FileAllowed
-from .models import EventStatus
 
 ALLOWED_FILE = {'PNG', 'JPG', 'JPEG', 'png', 'jpg', 'jpeg', 'jfif'}
 
@@ -36,7 +35,7 @@ class EditForm(FlaskForm):
     event_datetime = DateTimeField('Event Date and Time', format='%Y-%m-%dT%H:%M',validators = [InputRequired('Enter date and time')])
     event_cost = IntegerField('Ticket Cost')
     event_availabilities = IntegerField('Ticket Availabilities', validators = [InputRequired('Enter Ticket Availabilities')])
-    event_status = RadioField('Event Status', choices = [(EventStatus.OPEN, EventStatus.OPEN.value), (EventStatus.CANCELLED, EventStatus.CANCELLED.value)])
+    event_status = RadioField('Event Status', choices = [('Open', 'Open'), ('Cancelled', 'Cancelled')])
     event_submit = SubmitField("Edit My Event")
 
 
