@@ -33,82 +33,9 @@
                     </div>
                 </div>
             </div>
-            <div class="container history_log">
-                <div class="row align-items-center">
-                    <div class="container col-xxl-4 col-md-12 mt-md-1">
-                        <img src="./static/img/EventPhotos/Swift.jpg" class="history_img" alt="TaylorSwift">
-                    </div>
-                    <div class="container col-xxl-6 col-md-12 mt-md-3">
-                        <div class="history_heading">
-                            Booking: The Swift Concert
-                        </div>
-                        <div class="history_text">
-                            Booking Date: 20/06/2023 16:00
-                        </div>
-                        <div class="history_text">
-                            Booking ID: 241642
-                        </div>
-                        <div class="history_text">
-                            Number of Tickets: 1
-                        </div>
-                        <div class="history_text mt-2">
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#EmailTickets">
-                                Email tickets
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          
             
-            <!-- Modal -->
-            <div class="modal fade" id="EmailTickets" tabindex="-1" aria-labelledby="EmailTicketsModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="EmailTickets">Email Tickets</h1>
-                        </div>
-                        <div class="modal-body">
-                        <form class="was-validated">
-                            <div class="mb-3">
-                                <label for="EmailTicketInput" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="EmailTicketInput" placeholder="name@example.com" required>
-                                <div class="invalid-feedback">
-                                    Please enter an email.
-                                </div>
-                            </div>                              
-                        </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-secondary" data-bs-target="#EmailTickets2" data-bs-toggle="modal">Send</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="EmailTickets2" aria-hidden="true" aria-labelledby="EmailTickets2" data-bs-backdrop="static" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="EmailTickets2">Tickets Sent</h1>
-                    </div>
-                    <div class="modal-body">
-                      <div class="d-flex justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                        </svg>  
-                      </div>
-                      <div class="container text-center">
-                        You tickets have been booked.
-                      </div>
-                       
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
         </main>
       </body>
     </div>
-{% endblock% }
+{% endblock %}

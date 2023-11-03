@@ -166,14 +166,14 @@ def book(id):
       db.session.add(booking) 
       db.session.commit()
       return redirect(url_for('events.mybookings'), form=form)
-   return render_template('book.html', form=form, id=id)
+   return render_template('book.html', form=form)
 
 @Eventbp.route('/mybookings')
 @login_required
 def mybookings():
    user_id = current_user.id
    bookings = Booking.query.filter_by(user_id=user_id).all()
-   return render_template('events/history.html', bookings=bookings)
+   return render_template('history.html', bookings=bookings)
    
       
 
