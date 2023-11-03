@@ -42,13 +42,14 @@
       <h2>Categories</h2>
       <div class="row">
         <div class="col-12">
-          <div class="btn-group d-flex" role="group" aria-label="Category Buttons">
+          <div class="btn-group d-flex" role="group" aria-label="Category Buttons"> 
+            <a href="{{ url_for('events.Allevents')}}" button type="button" class="btn btn-secondary">All</a>
             <a href="{{ url_for('events.Popevents')}}" button type="button" class="btn btn-secondary">Pop</a>
-            <button type="button" class="btn btn-secondary">Classical</button>
-            <button type="button" class="btn btn-secondary">Jazz</button>
-            <button type="button" class="btn btn-secondary">Rock</button>
-            <button type="button" class="btn btn-secondary">Country</button>
-            <button type="button" class="btn btn-secondary">Hip Hop</button>
+            <a href="{{ url_for('events.Classicevents')}}" button type="button" class="btn btn-secondary">Classical</a>
+            <a href="{{ url_for('events.Jazzevents')}}" button type="button" class="btn btn-secondary">Jazz</a>
+            <a href="{{ url_for('events.Rockevents')}}" button type="button" class="btn btn-secondary">Rock</a>
+            <a href="{{ url_for('events.Countryevents')}}" button type="button" class="btn btn-secondary">Country</a>
+            <a href="{{ url_for('events.HipHopevents')}}" button type="button" class="btn btn-secondary">HipHop</a>
           </div>
         </div>
       </div>

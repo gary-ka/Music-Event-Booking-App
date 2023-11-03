@@ -151,9 +151,50 @@ def myevents():
     return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
 
 @Eventbp.route('/event/pop')
-@login_required
 def Popevents():
     EventStatus_enum = EventStatus
     currentdatetime = datetime.now()
-    PopEvents = Event.query.filter_by(category='Pop').all()
-    return render_template('pop.html', PopEvents=PopEvents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+    Popevents = Event.query.filter_by(category='Pop').all()
+    return render_template('pop.html', Popevents=Popevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+
+@Eventbp.route('/event/rock')
+def Rockevents():
+    EventStatus_enum = EventStatus
+    currentdatetime = datetime.now()
+    Rockevents = Event.query.filter_by(category='Rock').all()
+    return render_template('rock.html', Rockevents=Rockevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+
+@Eventbp.route('/event/classical')
+def Classicevents():
+    EventStatus_enum = EventStatus
+    currentdatetime = datetime.now()
+    Classicevents = Event.query.filter_by(category='Classical').all()
+    return render_template('classical.html', Classicevents=Classicevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+
+@Eventbp.route('/event/jazz')
+def Jazzevents():
+    EventStatus_enum = EventStatus
+    currentdatetime = datetime.now()
+    Jazzevents = Event.query.filter_by(category='Jazz').all()
+    return render_template('jazz.html', Jazzevents=Jazzevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+
+@Eventbp.route('/event/country')
+def Countryevents():
+    EventStatus_enum = EventStatus
+    currentdatetime = datetime.now()
+    Countryevents = Event.query.filter_by(category='Country').all()
+    return render_template('country.html', Countryevents=Countryevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+
+@Eventbp.route('/event/hiphop')
+def HipHopevents():
+    EventStatus_enum = EventStatus
+    currentdatetime = datetime.now()
+    HipHopevents = Event.query.filter_by(category='HipHop').all()
+    return render_template('hiphop.html', HipHopEvents=HipHopevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+
+@Eventbp.route('/event/all')
+def Allevents():
+    EventStatus_enum = EventStatus
+    currentdatetime = datetime.now()
+    Allevents = Event.query.all()
+    return render_template('all.html', Allevents=Allevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
