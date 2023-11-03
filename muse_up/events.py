@@ -49,6 +49,7 @@ def create():
     return redirect(url_for('events.myevents'))
   return render_template('events/create.html', form=form)
 
+#Fails to edit events
 @Eventbp.route('/edit/<id>', methods=['GET', 'POST'])
 @login_required
 def edit_event(id):
