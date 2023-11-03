@@ -154,7 +154,6 @@ def myevents():
 @login_required
 def book(id):
    form = BookingForm()
-   #if form.validate_on_submit():
    if request.method == 'POST':
       booking = Booking(num_tickets = form.booking_tickets.data,
                         card_name = form.booking_cardName.data,
