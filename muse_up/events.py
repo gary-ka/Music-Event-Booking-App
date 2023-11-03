@@ -152,7 +152,7 @@ def myevents():
 
 @Eventbp.route('/pop')
 @login_required
-def myevents():
+def Popevents():
     EventStatus_enum = EventStatus
     currentdatetime = datetime.now()
     PopEvents = Event.query.filter_by(category='Pop').all()
