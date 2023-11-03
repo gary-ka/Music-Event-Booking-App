@@ -74,14 +74,15 @@ def edit_event(id):
   event.availability=form.event_availabilities.data
   event.status = form.event_status.data
   event.user_id = current_user.id
-  # commit to the database
-  try:
-    db.session.commit()  
-    flash('Successfully edited event', 'success')
-  except Exception as e:
-    print("Error")
-  #Always end with redirect when form is valid
-  return redirect(url_for('events.edit_event', id=id))
+  if form.validate_on_submit():
+    # commit to the database
+    try:
+      db.session.commit()  
+      flash('Successfully edited event', 'success')
+    except Exception as e:
+      print("Error")
+    #Always end with redirect when form is valid
+    return redirect(url_for('events.edit_event', id=id))
   return render_template('events/edit.html', id=id, form=form)
 
 def check_upload_file(form):
