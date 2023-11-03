@@ -1,7 +1,7 @@
 
 from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, SelectField, DateTimeField, IntegerField, RadioField
-from wtforms.validators import InputRequired, Length, Email, EqualTo
+from wtforms.validators import InputRequired, Length, Email, EqualTo, Regexp
 from flask_wtf.file import FileRequired, FileField, FileAllowed
 
 ALLOWED_FILE = {'PNG', 'JPG', 'JPEG', 'png', 'jpg', 'jpeg', 'jfif'}
@@ -74,7 +74,9 @@ class RegisterForm(FlaskForm):
     address = StringField("Address", validators=[InputRequired()])
     #linking two fields - password should be equal to data entered in confirm
     password=PasswordField("Password", validators=[InputRequired(),
-                  EqualTo('confirm', message="Passwords should match")])
+                  EqualTo('confirm', message="Passwords should match"),
+                  Regexp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-_=+{};:,<.>]).{8,}$',
+                         message='Password must contain at least 8 characters, including one lowercase letter, one uppercase letter, one digit, and one special character')])
     confirm = PasswordField("Confirm Password")
 
     #submit button
