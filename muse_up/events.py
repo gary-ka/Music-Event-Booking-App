@@ -154,7 +154,8 @@ def myevents():
 @login_required
 def book(id):
    form = BookingForm()
-   if form.validate_on_submit():
+   #if form.validate_on_submit():
+   if request.method == 'POST':
       booking = Booking(num_tickets = form.booking_tickets.data,
                         card_name = form.booking_cardName.data,
                         card_num = form.booking_cardNo.data,
@@ -165,7 +166,7 @@ def book(id):
                         event_id = id)
       db.session.add(booking) 
       db.session.commit()
-      return redirect(url_for('events.mybookings'), form=form)
+      return redirect(url_for('events.mybookings'))
    return render_template('book.html', form=form)
 
 @Eventbp.route('/mybookings')
@@ -174,7 +175,7 @@ def mybookings():
    user_id = current_user.id
    booking_date = datetime.now()
    bookings = Booking.query.filter_by(user_id=user_id).all()
-   return render_template('history.html', bookings=bookings, booking_date=booking_date)
+   return render_template('history.html', bookings=bookings, booking_date=booking_date, user=current_user)
    
       
 
