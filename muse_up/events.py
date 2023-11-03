@@ -198,7 +198,7 @@ def book(id):
                         card_num = form.booking_cardNo.data,
                         cvv = form.booking_cardCVV.data,
                         year = form.booking_cardYear.data,
-                        month = form.Booking_cardMonth.data,
+                        month = form.booking_cardMonth.data,
                         user_id = current_user.id,
                         event_id = id)
       db.session.add(booking) 
