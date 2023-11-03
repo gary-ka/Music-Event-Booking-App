@@ -150,7 +150,7 @@ def myevents():
     myevents = Event.query.filter_by(user_id=user_id).all()
     return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
 
-@Eventbp.route('/event/pop')
+@Eventbp.route('/Pop')
 @login_required
 def Popevents():
     EventStatus_enum = EventStatus
