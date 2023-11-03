@@ -119,6 +119,11 @@
                       </div>
                     {% endif %}
                   </li>
+                  <li class="list-group-item">
+                    <div class="container mx-auto text-center">
+                      <a button type="button" class="btn btn-secondary" href="{{ url_for('events.details', id=event.id)}}">Details</button></a>
+                    </div>
+                  </li>
                 </ul>
               </div>
             </div>
