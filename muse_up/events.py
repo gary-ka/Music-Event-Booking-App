@@ -36,7 +36,7 @@ def create():
                   price=form.event_cost.data,
                   availability=form.event_availabilities.data,
                   image=db_file_path,
-                  status = EventStatus.OPEN,
+                  status = 'Open',
                   user_id = current_user.id)
     # add the object to the db session
     db.session.add(event)
@@ -61,27 +61,31 @@ def edit_event(id):
                     event_datetime=event.date,
                     event_cost=event.price,
                     event_availabilities=event.availability,
-                    event_status = EventStatus.OPEN,
+                    event_status = event.status,
                     event_photo=event.image)
-  event.name=form.event_name.data
-  event.intro=form.event_introduction.data
-  event.description=form.event_description.data
-  event.musician=form.event_musician.data
-  event.category=form.event_category.data
-  event.location=form.event_location.data
-  event.date=form.event_datetime.data
-  event.price=form.event_cost.data
-  event.availability=form.event_availabilities.data
-  event.status = form.event_status.data
-  event.user_id = current_user.id
   if form.validate_on_submit():
+    event.name=form.event_name.data
+    event.intro=form.event_introduction.data
+    event.description=form.event_description.data
+    event.musician=form.event_musician.data
+    event.category=form.event_category.data
+    event.location=form.event_location.data
+    event.date=form.event_datetime.data
+    event.price=form.event_cost.data
+    event.availability=form.event_availabilities.data
+    event.status = form.event_status.data
+    event.user_id = current_user.id
     # commit to the database
+    print('Form is valid, processing data')
     try:
-      db.session.commit()  
-      flash('Successfully edited event', 'success')
+        db.session.commit()
+        flash('Successfully edited event', 'success')
     except Exception as e:
-      print("Error")
-    #Always end with redirect when form is valid
+        print(e, 'error')
+
+    # Print statements for debugging
+    print('Redirecting to edit_event route')
+
     return redirect(url_for('events.edit_event', id=id))
   return render_template('events/edit.html', id=id, form=form)
 
@@ -124,31 +128,14 @@ def comment(id):
     # using redirect sends a GET request to destination.show
     return redirect(url_for('events.details', id=id))
 
-@Eventbp.route('/cancel_event/<id>', methods=['GET','POST'])
-@login_required
-def cancel_event(id):
-    event = Event.query.get_or_404(id)
-    event.status = False
-    db.session.commit()
-    return redirect(url_for('events.myevent', id=id))
-
-@Eventbp.route('/reopen_event/<id>')
-@login_required
-def reopen_event(id):
-    event = Event.query.get_or_404(id)
-    event.status = True
-    db.session.commit()
-    flash('Event has been Cancelled', 'Cancelled')
-    return redirect(url_for('events/myevent.html'))
-
 @Eventbp.route('/myevents')
 @login_required
 def myevents():
-    EventStatus_enum = EventStatus
+    EventStatus= Event.status
     currentdatetime = datetime.now()
     user_id = current_user.id
     myevents = Event.query.filter_by(user_id=user_id).all()
-    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus_enum=EventStatus_enum)
+    return render_template('events/myevents.html', myevents=myevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
 
 @Eventbp.route('/book/<id>', methods=['GET','POST'])
 @login_required

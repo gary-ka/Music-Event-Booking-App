@@ -1,42 +1,41 @@
 {% extends 'base.html' %}
 
-  
 {% block header %}
-      <!--Home Page Carousel-->
-        <div id="HomePageCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#HomePageCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#HomePageCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active c-item">
-                <img src="./static/img/Carousel1.jpg" class="d-block w-100 c-img" alt="...">
-                <div class="carousel-caption d-none d-sm-block">
-                  <h1>Explore the world of music...</h1>
-                </div>
-              </div>
-              <div class="carousel-item c-item">
-                <img src="./static/img/Carousel2.jpg" class="d-block w-100 c-img" alt="...">
-                <div class="carousel-caption d-none d-sm-block">
-                  <h1>...or create the world of music.</h1>
-                </div>
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#HomePageCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#HomePageCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+  <!-- Home Page Carousel -->
+  <div id="HomePageCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#HomePageCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#HomePageCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active c-item">
+        <img src="/static/img/Carousel1.jpg" class="d-block w-100 c-img" alt="...">
+        <div class="carousel-caption d-none d-sm-block">
+          <h1>Explore the world of music...</h1>
         </div>
+      </div>
+      <div class="carousel-item c-item">
+        <img src="/static/img/Carousel2.jpg" class="d-block w-100 c-img" alt="...">
+        <div class="carousel-caption d-none d-sm-block">
+          <h1>...or create the world of music.</h1>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#HomePageCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#HomePageCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 {% endblock %}
 
 {% block content %}
   <main>
     <div class="mt-3">
-      <h1 align="center">Let's see what's on!</h1>   
+      <h1 align="center">Let's see what's on!</h1>
     </div>
     <section id="categories-section">
       <h2 align="center">Categories</h2>
@@ -58,14 +57,14 @@
       </section>
       <div class="container text-start pt-3">
         <div class="col">
-            <h1 style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">All Events</h1>
+            <h1 style="font-weight: bold; font-family: Arial, Helvetica, sans-serif;">Rock Events</h1>
         </div>
       </div>
   
       <div class="container col-md mt-3">
-          {% if Allevents %}
+          {% if Rockevents %}
           <div class="row row-col-1 row-cols-md-4 g-4">
-            {% for event in Allevents %}
+            {% for event in Rockevents %}
               <div class="col-lg-3">
                 <div class="card">
                   <img src="{{ event.image }}" class="card-img-top event-img" alt="QSO">
@@ -136,7 +135,7 @@
                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                 <path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
               </svg>
-              <h1 style="font-family: Arial, Helvetica, sans-serif;"> Sorry, there are no any events at the moment.</h1>
+              <h1 style="font-family: Arial, Helvetica, sans-serif;"> Sorry, there are no any events for Rock Category.</h1>
             </div>
           {% endif %}
         </div>

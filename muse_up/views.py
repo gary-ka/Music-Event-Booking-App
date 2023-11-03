@@ -1,11 +1,13 @@
 from flask import Blueprint, render_template
-#from .models import Event
-#from . import db
+from .models import Event
+from datetime import datetime
 
 bp = Blueprint('main', __name__)
 
 
 @bp.route('/')
 def index():
-    #event = db.session.scalars(db.select(Event)).all() 
-    return render_template('index.html')
+    EventStatus = Event.status
+    currentdatetime = datetime.now()
+    Allevents = Event.query.all()
+    return render_template('index.html', Allevents=Allevents, currentdatetime=currentdatetime, EventStatus=EventStatus)
